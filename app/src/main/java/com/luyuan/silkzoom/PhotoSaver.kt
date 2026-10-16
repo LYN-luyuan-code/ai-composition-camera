@@ -30,11 +30,10 @@ internal object PhotoSaver {
             val canvas = Canvas(output)
             canvas.translate(output.width / 2f, output.height / 2f)
             canvas.rotate(image.imageInfo.rotationDegrees.toFloat())
-            val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG).apply {
-                colorFilter = ColorMatrixColorFilter(ColorMatrix(filter.matrix(strength)))
-            }
+            val paint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
             canvas.drawBitmap(source, Rect(crop.left, crop.top, crop.left + crop.width, crop.top + crop.height),
                 RectF(-crop.width / 2f, -crop.height / 2f, crop.width / 2f, crop.height / 2f), paint)
+            LutBitmap.applyInPlace(output, filter, strength)
             val resolver = context.contentResolver
             val values = ContentValues().apply {
                 put(MediaStore.Images.Media.DISPLAY_NAME, "Street_${SimpleDateFormat("yyyyMMdd_HHmmss_SSS", Locale.US).format(Date())}.jpg")

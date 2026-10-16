@@ -21,6 +21,7 @@ internal class CameraOverlayView(context: Context) : FrameLayout(context) {
         fun onEndComposition()
         fun onSettings()
         fun onFilters()
+        fun onFilterInfo(filter: StreetFilter)
         fun onFilterChanged(filter: StreetFilter, strength: Float)
         fun onOpenPhoto()
         fun onCycleFlash()
@@ -78,7 +79,7 @@ internal class CameraOverlayView(context: Context) : FrameLayout(context) {
     private val flashButton = iconButton("flash-off", "闪光灯关") { listener?.onCycleFlash() }
     private val expandButton = iconButton("down", "展开相机选项") { setOptionsVisible(options.visibility != VISIBLE) }.apply { background = android.graphics.drawable.InsetDrawable(theme.control(dp(18f)), dp(6f).toInt(), dp(10f).toInt(), dp(6f).toInt(), dp(10f).toInt()) }
     private val filterButton = iconButton("filter", "打开滤镜") { listener?.onFilters() }
-    private val settingsButton = iconButton("settings", "AI 供应商设置") { listener?.onSettings() }
+    private val settingsButton = iconButton("settings", "相机设置") { listener?.onSettings() }
     private val qualityButton = button("标准") { showQualityMenu() }
     private val gridButton = button("参考线 开") { gridVisible = !gridVisible; updateGridLabel(); guide.invalidate() }
     private val photoButton = button("拍照") { closePanels() }.apply { textSize = 15f; setTextColor(theme.accent) }
@@ -105,7 +106,7 @@ internal class CameraOverlayView(context: Context) : FrameLayout(context) {
         onBegin = { beginZoomGesture() }; onChange = { listener?.onZoomTarget(it) }; onEnd = { endZoomGesture() }
     }
     private val filterStrip = CameraFilterStrip(context).apply {
-        visibility = GONE; onChanged = { filter, strength -> listener?.onFilterChanged(filter, strength) }
+        visibility = GONE; onChanged = { filter, strength -> listener?.onFilterChanged(filter, strength) }; onInfo = { listener?.onFilterInfo(it) }
     }
     private val allControls: List<View> get() = listOf(flashButton, expandButton, qualityButton, gridButton, settingsButton, filterButton, photoButton, filterTab, photoThumbnail, composeButton, shutter, zoomGestureBar) + zoomButtons.map { it.second }
 
@@ -192,6 +193,9 @@ internal class CameraOverlayView(context: Context) : FrameLayout(context) {
         val next = RectF(0f, 0f, w.toFloat(), h.toFloat())
         if (previewBounds != next) { previewBounds.set(next); listener?.onPreviewAreaChanged(0, 0, w, h) }
     }
+    fun setFilterCategory(category:String) { filterStrip.setCategory(category) }
+    fun setFilterCatalog(filters:List<StreetFilter>) { filterStrip.setCatalog(filters) }
+    fun setFilterPreview(bitmap:Bitmap) { filterStrip.setPreview(bitmap) }
     fun openFilters(preview: Bitmap?) {
         setOptionsVisible(false); filtersVisible = true; filterStrip.setPreview(preview); filterStrip.visibility = VISIBLE
         zoomRow.visibility = GONE; zoomGestureBar.visibility = if (width > height) GONE else VISIBLE; filterTab.setTextColor(theme.accent); photoButton.setTextColor(Color.WHITE)
@@ -243,8 +247,14 @@ internal class CameraOverlayView(context: Context) : FrameLayout(context) {
     fun showFocus(x: Float, y: Float) { focusPoint = x to y; focusUntil = SystemClock.uptimeMillis() + 550; guide.invalidate() }
     fun showCaptureFlash() { flashUntil = SystemClock.uptimeMillis() + 100; guide.invalidate() }
     private fun updateStatus() {
-        val text = transientMessage ?: when { saving -> "正在保存照片…"; searching -> "正在寻找有表现力的主体…"; ready -> "构图就绪，按快门拍摄"; cropping -> "正在收紧画面…"; compositionActive && subject == null -> "暂时跟丢，请保持取景或重新寻找"; compositionActive -> "沿箭头轻移手机" + (reason?.takeIf { it.isNotBlank() }?.let { "\n$it" } ?: ""); else -> "" }
+        val text = transientMessage ?: when { saving -> "正在保存照片…"; searching -> "正在寻找有表现力的主体…"; ready -> "构图就绪，按快门拍摄" + cropShapeLabel(); cropping -> "正在收紧画面…"; compositionActive && subject == null -> "暂时跟丢，请保持取景或重新寻找"; compositionActive -> "沿箭头轻移手机" + (reason?.takeIf { it.isNotBlank() }?.let { "\n$it" } ?: ""); else -> "" }
         status.visibility = if (text.isEmpty()) GONE else VISIBLE; if (status.text.toString() != text) status.text = text
+    }
+    private fun cropShapeLabel():String {
+        if(previewBounds.height()<=0 || retainedPhotoWidth==1f && retainedPhotoHeight==1f)return ""
+        val ratio=previewBounds.width()*retainedPhotoWidth/(previewBounds.height()*retainedPhotoHeight)
+        val shape=if(ratio>1.05f)"横幅" else if(ratio<.95f)"竖幅" else "近方形"
+        return "\n$shape · "+String.format(Locale.US,"%.2f:1",ratio)
     }
     private fun showQualityMenu() { PopupMenu(context, qualityButton).apply { ResolutionPreset.entries.forEach { menu.add(it.label).setOnMenuItemClickListener { _ -> listener?.onResolutionSelected(it); true } }; show() } }
     override fun onDetachedFromWindow() { filterStrip.release(); super.onDetachedFromWindow() }

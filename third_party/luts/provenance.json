@@ -1,0 +1,23 @@
+{
+  "author": "stripedpurple",
+  "repository": "https://github.com/stripedpurple/color-grading-luts",
+  "commit": "9757e8b5147693cab49c3fd674bf23dbe28d6c8e",
+  "license": "MIT",
+  "files": [
+    {
+      "file": "cinema60.cube",
+      "url": "https://raw.githubusercontent.com/stripedpurple/color-grading-luts/9757e8b5147693cab49c3fd674bf23dbe28d6c8e/Cinema%20Through%20The%20Ages/Striped%20Purple%20-%201960s.cube",
+      "sha256": "8991e4ab8d919812cf694cef4e7c5ab595e0d06aa2ee2b11824bef1597a3d316"
+    },
+    {
+      "file": "cinema80.cube",
+      "url": "https://raw.githubusercontent.com/stripedpurple/color-grading-luts/9757e8b5147693cab49c3fd674bf23dbe28d6c8e/Cinema%20Through%20The%20Ages/Striped%20Purple%20-%201980_s.cube",
+      "sha256": "1efab4b550fa88e157475ab35521af70e8d71e1139d8e9dae49e8dcbd0001270"
+    },
+    {
+      "file": "LICENSE.txt",
+      "url": "https://raw.githubusercontent.com/stripedpurple/color-grading-luts/9757e8b5147693cab49c3fd674bf23dbe28d6c8e/LICENSE",
+      "sha256": "f9ec0414792341c7d72b8a95049ba770d543357836d4cfe71ec103460fdb242c"
+    }
+  ]
+}

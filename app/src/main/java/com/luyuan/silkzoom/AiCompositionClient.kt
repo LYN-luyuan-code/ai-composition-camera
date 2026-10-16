@@ -20,10 +20,10 @@ internal class AiCompositionClient(
 
     fun cancel() { cancelled = true; connection?.disconnect() }
 
-    fun analyze(configuration: AiConfiguration, jpeg: ByteArray, subject: Pair<Float, Float>? = null, maxCropScale: Float = 8f): CompositionPlan {
+    fun analyze(configuration: AiConfiguration, jpeg: ByteArray, subject: Pair<Float, Float>? = null, maxCropScale: Float = 8f, frameAspectRatio: Float = 1f): CompositionPlan {
         configuration.validated()
         if (cancelled) throw CancellationException()
-        val request = buildRequest(configuration, jpeg, subject, maxCropScale).toString().toByteArray(Charsets.UTF_8)
+        val request = buildRequest(configuration, jpeg, subject, maxCropScale, frameAspectRatio).toString().toByteArray(Charsets.UTF_8)
         val http = openConnection(configuration.endpoint())
         connection = http
         try {
@@ -59,7 +59,7 @@ internal class AiCompositionClient(
                 }
                 output.toString("UTF-8")
             }
-            return parseResponse(body)
+            return parseResponse(body, frameAspectRatio)
         } catch (error: SocketTimeoutException) {
             throw AiCompositionException("AI 分析超时，请保持取景稳定后重试")
         } finally {
@@ -90,8 +90,9 @@ internal class AiCompositionClient(
             Give one short Chinese reason. Output only the user's requested JSON schema.
         """.trimIndent()
 
-        fun buildRequest(configuration: AiConfiguration, jpeg: ByteArray, subject: Pair<Float, Float>? = null, maxCropScale: Float = 8f): JSONObject {
-            val example = """{"subject_x":${subject?.first ?: .5f},"subject_y":${subject?.second ?: .5f},"target_x":0.5,"target_y":0.5,"crop_width":1.0,"crop_height":1.0,"subject_label":"实际可见的主体","art":0.9,"story":0.8,"geometry":0.8,"clarity":0.8,"reason":"基于画面给出一条建议"}"""
+        fun buildRequest(configuration: AiConfiguration, jpeg: ByteArray, subject: Pair<Float, Float>? = null, maxCropScale: Float = 8f, frameAspectRatio: Float = 1f): JSONObject {
+            require(frameAspectRatio.isFinite() && frameAspectRatio > 0f)
+            val example = """{"subject_x":${subject?.first ?: .5f},"subject_y":${subject?.second ?: .5f},"target_x":0.5,"target_y":0.5,"crop_width":0.8,"crop_height":0.6,"aspect_ratio":${frameAspectRatio * .8f / .6f},"subject_label":"实际可见的主体","art":0.9,"story":0.8,"geometry":0.8,"clarity":0.8,"reason":"基于画面给出一条建议"}"""
             val selection = if (subject == null) """
                 Automatically discover the strongest photographic subjects anywhere in the image.
                 Do not default to its center, the largest object or a face. Compare up to TWO distinct
@@ -110,7 +111,15 @@ internal class AiCompositionClient(
                 target_x and target_y are the subject's position INSIDE the final crop, range 0.2..0.8.
                 crop_width and crop_height are independent fractions of the CURRENT image retained in
                 the final photo, each >0 and <=1. ANY aspect ratio is allowed: do not force 4:3, 16:9,
-                square, or the input ratio. The app derives zoom as 1/max(crop_width,crop_height),
+                square, or the input ratio. The current image PHYSICAL width/height is $frameAspectRatio.
+                Choose the final PHYSICAL aspect_ratio (width/height) from the subject and useful space.
+                Compare horizontal, near-square and vertical framings even when the phone is held upright.
+                These are possibilities, never a fixed list of ratios. Do not inherit the phone's orientation
+                automatically; vary both crop size and shape when the scene benefits. Preserve good framing.
+                Return aspect_ratio = $frameAspectRatio * crop_width / crop_height. Fractions alone are
+                NOT physical shape: equal fractions keep the input shape, not necessarily a square.
+                The JSON numbers above illustrate the schema, not a recommended framing.
+                The app derives zoom as 1/max(crop_width,crop_height),
                 range 1..${maxCropScale.coerceIn(1f, 8f)}; max(crop_width,crop_height) must be at least
                 ${1f / maxCropScale.coerceIn(1f, 8f)}. Phone movement centers this crop before capture.
                 Estimate subject size and clutter; substantial tightening is allowed when useful.
@@ -137,14 +146,15 @@ internal class AiCompositionClient(
                 }
         }
 
-        fun parseResponse(body: String): CompositionPlan {
+        fun parseResponse(body: String, frameAspectRatio: Float = 1f): CompositionPlan {
+            require(frameAspectRatio.isFinite() && frameAspectRatio > 0f) { "取景画幅无效" }
             try {
                 val message = JSONObject(body).getJSONArray("choices").getJSONObject(0).getJSONObject("message")
                 val raw = message.getString("content").trim()
                 val content = raw.removePrefix("```json").removePrefix("```").removeSuffix("```").trim()
                 val plan = JSONObject(content)
                 require(plan.optString("status") != "uncertain" && !plan.has("error")) { "AI 未找到明确主体，请重新取景" }
-                if (!plan.has("candidates")) return parsePlan(plan)
+                if (!plan.has("candidates")) return parsePlan(plan, frameAspectRatio)
                 val candidates = plan.getJSONArray("candidates")
                 require(candidates.length() in 1..3) { "AI 返回的主体候选数量无效" }
                 return (0 until candidates.length()).mapNotNull { index ->
@@ -153,13 +163,13 @@ internal class AiCompositionClient(
                         val priority = SubjectPriority.score(candidate.getDouble("art").toFloat(),
                             candidate.getDouble("story").toFloat(), candidate.getDouble("geometry").toFloat(),
                             candidate.getDouble("clarity").toFloat())
-                        parsePlan(candidate).copy(subjectScore = priority)
+                        parsePlan(candidate, frameAspectRatio).copy(subjectScore = priority)
                     }.getOrNull()
                 }.maxByOrNull { it.subjectScore } ?: throw IllegalArgumentException("AI 未找到可用主体，请重新寻找")
             } catch (error: IllegalArgumentException) { throw error }
             catch (error: Exception) { throw AiCompositionException("AI 返回格式无效，请重试或更换视觉模型") }
         }
-        private fun parsePlan(plan: JSONObject): CompositionPlan {
+        private fun parsePlan(plan: JSONObject, frameAspectRatio: Float): CompositionPlan {
                 val hasWidth = plan.has("crop_width")
                 val hasHeight = plan.has("crop_height")
                 require(hasWidth == hasHeight) { "AI 返回的自由裁切区域不完整，请重试" }
@@ -167,10 +177,20 @@ internal class AiCompositionClient(
                 var retainedWidth = 1f
                 var retainedHeight = 1f
                 if (hasWidth) {
-                    val width = plan.getDouble("crop_width").toFloat()
-                    val height = plan.getDouble("crop_height").toFloat()
+                    var width = plan.getDouble("crop_width").toFloat()
+                    var height = plan.getDouble("crop_height").toFloat()
                     require(width.isFinite() && height.isFinite() && width > 0f && height > 0f &&
                         width <= 1f && height <= 1f) { "AI 返回的自由裁切区域无效，请重试" }
+                    if (plan.has("aspect_ratio")) {
+                        val aspect = plan.getDouble("aspect_ratio").toFloat()
+                        require(aspect.isFinite() && aspect > 0f) { "AI 返回的照片比例无效，请重试" }
+                        // Physical shape wins over rounded/inconsistent fractional extents; keep requested zoom.
+                        val longest = maxOf(width, height)
+                        val relative = aspect / frameAspectRatio
+                        require(relative.isFinite() && relative > 0f) { "AI 返回的照片比例无效，请重试" }
+                        width = longest * minOf(1f, relative)
+                        height = longest * minOf(1f, 1f / relative)
+                    }
                     scale = 1f / maxOf(width, height)
                     retainedWidth = (width * scale).coerceAtMost(1f)
                     retainedHeight = (height * scale).coerceAtMost(1f)

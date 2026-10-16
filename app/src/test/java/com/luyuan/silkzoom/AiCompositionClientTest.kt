@@ -144,6 +144,26 @@ class AiCompositionClientTest {
         }
     }
 
+    @Test fun physicalAspectCanBeHorizontalSquareOrVerticalOnAnyPhoneOrientation() {
+        for(source in listOf(.45f,.75f,1.78f))for(aspect in listOf(.5f,1f,1.6f,2.4f)) {
+            val json=JSONObject(plan).put("crop_width",.7).put("crop_height",.7).put("aspect_ratio",aspect)
+            val parsed=AiCompositionClient.parseResponse(response(json.toString()),source)
+            assertEquals(aspect,source*parsed.cropWidth/parsed.cropHeight,.0001f)
+            assertEquals(1f/.7f,parsed.cropScale,.0001f)
+        }
+    }
+    @Test fun requestTeachesPhysicalShapeAndRejectsInvalidAspect() {
+        val request=AiCompositionClient.buildRequest(config(AiProvider.MIMO),byteArrayOf(1),frameAspectRatio=.45f)
+        val prompt=userContent(request).getJSONObject(1).getString("text")
+        assertTrue(prompt.contains("PHYSICAL width/height is 0.45"))
+        assertTrue(prompt.contains("Compare horizontal, near-square and vertical"))
+        for(aspect in listOf(0,-1,"NaN","Infinity")) {
+            val json=JSONObject(plan).put("crop_width",.7).put("crop_height",.5).put("aspect_ratio",aspect)
+            assertThrows(Exception::class.java) { AiCompositionClient.parseResponse(response(json.toString()),.45f) }
+        }
+        assertThrows(Exception::class.java) { AiCompositionClient.parseResponse(response(),0f) }
+    }
+
     private class FakeConnection(url: URL, private val body: String, private val status: Int = 200) : HttpURLConnection(url) {
         val sent = ByteArrayOutputStream()
         var disconnected = false

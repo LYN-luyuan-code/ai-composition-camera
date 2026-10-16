@@ -29,6 +29,21 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
     private lateinit var previewHost: FrameLayout
     private lateinit var overlayView: CameraOverlayView
     private lateinit var aiSettings: AiSettingsStore
+    private lateinit var lutStore: LutStore
+    private lateinit var lutProcessor: LutSurfaceProcessor
+    private val lutExecutor=Executors.newSingleThreadExecutor()
+    private var gpuAvailable=true
+    private var filterPreviewGeneration=0
+    private var filterCategory="全部"
+    private val importLut=registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+        if(uri!=null)lutExecutor.execute {
+            val outcome=runCatching { lutStore.importFile(uri) }
+            runOnUiThread {
+                if(isDestroyed)return@runOnUiThread
+                outcome.fold(onSuccess={ filter -> overlayView.setFilterCatalog(lutStore.all());setFilterCategory("我的LUT");onFilterChanged(filter,1f);if(!overlayView.filtersVisible)onFilters();overlayView.showMessage("已导入 ${filter.label}") },onFailure={ overlayView.showMessage(it.message ?: "LUT 导入失败",5000) })
+            }
+        }
+    }
     private var settingsDialog: AlertDialog? = null
     private var lastPhotoUri: android.net.Uri? = null
     private var thumbnailBitmap: Bitmap? = null
@@ -126,9 +141,21 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
         }
         overlayView = CameraOverlayView(this).also { it.listener = this }
         aiSettings = AiSettingsStore(this)
+        lutStore=LutStore(this)
+        filterCategory=getSharedPreferences("camera_settings",MODE_PRIVATE).getString("filter_category","全部") ?: "全部"
+        overlayView.setFilterCategory(filterCategory)
+        lutProcessor=LutSurfaceProcessor { error -> mainExecutor.execute {
+            if(!isDestroyed && gpuAvailable) {
+                Log.e("StreetCamera","LUT preview failed",error);gpuAvailable=false
+                streetFilter=StreetFilter.ORIGINAL;filterStrength=1f;applyFilter()
+                overlayView.showMessage("设备滤镜预览不可用，已恢复原片",5000)
+                if(cameraProvider!=null)bindCamera()
+            }
+        } }
+        overlayView.setFilterCatalog(lutStore.all())
         val preferences = getSharedPreferences("camera_settings", MODE_PRIVATE)
         photoResolution = runCatching { ResolutionPreset.valueOf(preferences.getString("photo_resolution", "PHOTO_12_MP")!!) }.getOrDefault(ResolutionPreset.PHOTO_12_MP)
-        streetFilter = runCatching { StreetFilter.valueOf(preferences.getString("street_filter", "ORIGINAL")!!) }.getOrDefault(StreetFilter.ORIGINAL)
+        streetFilter = lutStore.find(preferences.getString("street_filter", "ORIGINAL") ?: "ORIGINAL")
         filterStrength = preferences.getFloat("filter_strength", 1f).coerceIn(0f, 1f)
         overlayView.setResolutionPreset(photoResolution)
         overlayView.setZoomRange(globalMinZoom, globalMaxZoom)
@@ -164,7 +191,7 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
         settingsDialog?.dismiss(); previewAnalysis?.clearAnalyzer(); zoomController?.cancel(); cameraProvider?.unbindAll()
         compositionExecutor.shutdownNow(); aiExecutor.shutdownNow(); analysisExecutor.shutdownNow()
         // Let a photograph already being written finish and clear its MediaStore pending flag.
-        photoExecutor.shutdown()
+        photoExecutor.shutdown();lutExecutor.shutdownNow();lutProcessor.close()
         super.onDestroy()
     }
     private fun startCamera() {
@@ -193,6 +220,7 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
             .setFlashMode(flashMode).setResolutionSelector(resolution).setTargetRotation(rotation).build()
         imageCapture = capture
         val group = UseCaseGroup.Builder().addUseCase(preview).addUseCase(capture)
+        if(gpuAvailable)group.addEffect(lutProcessor.effect)
         previewView.viewPort?.let { group.setViewPort(it) }
         if (analysisAvailable) {
             val analysis = ImageAnalysis.Builder().setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
@@ -247,9 +275,22 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
     override fun onSettings() {
         if (settingsDialog?.isShowing == true) return
         cancelComposition()
-        settingsDialog = AiSettingsDialog.show(this, aiSettings) {
-            overlayView.showMessage("构图设置已保存")
-        }
+        overlayView.closePanels()
+        settingsDialog=AlertDialog.Builder(this).setTitle("相机设置")
+            .setItems(arrayOf("AI 构图设置", "滤镜分类：$filterCategory", "当前滤镜说明：${streetFilter.label}", "导入 .cube LUT", "管理导入的 LUT")) { _,which ->
+                when(which) {
+                    0 -> settingsDialog=AiSettingsDialog.show(this,aiSettings) { overlayView.showMessage("构图设置已保存") }
+                    1 -> {
+                        val groups=arrayOf("全部","色彩","胶片","单色","我的LUT")
+                        settingsDialog=AlertDialog.Builder(this).setTitle("滤镜分类").setSingleChoiceItems(groups,groups.indexOf(filterCategory)) { dialog,index ->
+                            setFilterCategory(groups[index]);dialog.dismiss();if(!overlayView.filtersVisible)onFilters()
+                        }.setNegativeButton("取消",null).show()
+                    }
+                    2 -> onFilterInfo(streetFilter)
+                    3 -> onImportLut()
+                    4 -> showImportedLuts()
+                }
+            }.setNegativeButton("关闭",null).show()
     }
 
     override fun onAutoCompose() {
@@ -295,7 +336,7 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
                     val output = ByteArrayOutputStream()
                     try { check(image.compress(Bitmap.CompressFormat.JPEG, 70, output)) }
                     finally { if (image !== snapshot) image.recycle() }
-                    request.analyze(config, output.toByteArray(), null, maxScale)
+                    request.analyze(config, output.toByteArray(), null, maxScale, snapshot.width.toFloat()/snapshot.height)
                 } finally { snapshot.recycle() }
             }
             runOnUiThread {
@@ -510,8 +551,9 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
         val zoom = currentDisplayZoom
         val retainedWidth = retainedPhotoWidth
         val retainedHeight = retainedPhotoHeight
-        val filter = streetFilter
-        val strength = filterStrength
+        val displayed=if(gpuAvailable)lutProcessor.displayed else LutSurfaceProcessor.Choice(StreetFilter.ORIGINAL,1f)
+        val filter = displayed.filter
+        val strength = displayed.strength
         savingPhoto = true; overlayView.setSaving(true); overlayView.showCaptureFlash()
         capture.targetRotation = previewView.display?.rotation ?: Surface.ROTATION_0
         capture.takePicture(photoExecutor, object : ImageCapture.OnImageCapturedCallback() {
@@ -533,18 +575,41 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
     override fun onFilters() {
         if (overlayView.filtersVisible) { overlayView.closePanels(); return }
         cancelComposition(); zoomController?.beginInteraction()
-        val original = previewView.bitmap
-        val preview = original?.let {
-            val cropped = PhotoSaver.cropPreview(it, currentDisplayZoom)
-            val factor = minOf(1f, 256f / maxOf(cropped.width, cropped.height))
-            val sample = Bitmap.createScaledBitmap(cropped, (cropped.width * factor).toInt().coerceAtLeast(1), (cropped.height * factor).toInt().coerceAtLeast(1), true)
-            if (cropped !== it && cropped !== sample) cropped.recycle()
-            if (it !== sample) it.recycle()
-            sample
+        overlayView.openFilters(null)
+        val generation=++filterPreviewGeneration;val zoom=currentDisplayZoom
+        fun deliver(original:Bitmap?) {
+            if(original==null)return
+            val cropped=PhotoSaver.cropPreview(original,zoom)
+            val factor=minOf(1f,256f/maxOf(cropped.width,cropped.height))
+            val sample=Bitmap.createScaledBitmap(cropped,(cropped.width*factor).toInt().coerceAtLeast(1),(cropped.height*factor).toInt().coerceAtLeast(1),true)
+            if(cropped!==original && cropped!==sample)cropped.recycle();if(original!==sample)original.recycle()
+            runOnUiThread { if(isDestroyed||generation!=filterPreviewGeneration||!overlayView.filtersVisible)sample.recycle() else overlayView.setFilterPreview(sample) }
         }
-        overlayView.openFilters(preview)
+        if(gpuAvailable)lutProcessor.snapshotRaw(::deliver) else deliver(previewView.bitmap)
+    }
+    private fun setFilterCategory(category:String) {
+        filterCategory=category;overlayView.setFilterCategory(category)
+        getSharedPreferences("camera_settings",MODE_PRIVATE).edit().putString("filter_category",category).apply()
+    }
+    private fun showImportedLuts() {
+        val imported=lutStore.all().filter { it.imported }
+        settingsDialog=if(imported.isEmpty()) AlertDialog.Builder(this).setTitle("我的 LUT")
+            .setMessage("还没有导入 LUT。选择 .cube 文件后，它会保存在应用内，可随时调整强度或删除。")
+            .setPositiveButton("导入 LUT") { _,_ -> onImportLut() }.setNegativeButton("关闭",null).show()
+        else AlertDialog.Builder(this).setTitle("我的 LUT").setItems(imported.map { it.label }.toTypedArray()) { _,index -> onFilterInfo(imported[index]) }
+            .setNegativeButton("关闭",null).show()
+    }
+    private fun onImportLut() { cancelComposition();importLut.launch(arrayOf("*/*")) }
+    override fun onFilterInfo(filter:StreetFilter) {
+        val builder=AlertDialog.Builder(this).setTitle(filter.label).setMessage(filter.description).setPositiveButton("关闭",null)
+        if(filter.imported)builder.setNeutralButton("删除 LUT") { _,_ ->
+            if(streetFilter.name==filter.name)onFilterChanged(StreetFilter.ORIGINAL,1f)
+            lutStore.delete(filter);overlayView.setFilterCatalog(lutStore.all());overlayView.showMessage("已删除导入的 LUT")
+        }
+        settingsDialog=builder.show()
     }
     override fun onFilterChanged(filter: StreetFilter, strength: Float) {
+        if(!gpuAvailable && filter!==StreetFilter.ORIGINAL){overlayView.showMessage("设备暂不支持 LUT 实时预览，请使用原片");return}
         streetFilter = filter; filterStrength = strength
         getSharedPreferences("camera_settings", MODE_PRIVATE).edit().putString("street_filter", filter.name).putFloat("filter_strength", strength).apply()
         applyFilter()
@@ -564,9 +629,7 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
         }
     }
     private fun applyFilter() {
-        val paint = Paint().apply { colorFilter = ColorMatrixColorFilter(ColorMatrix(streetFilter.matrix(filterStrength))) }
-        previewView.setLayerType(View.LAYER_TYPE_HARDWARE, paint)
-        previewView.setLayerPaint(paint)
+        if(gpuAvailable)lutProcessor.setFilter(streetFilter,filterStrength)
         overlayView.setFilter(streetFilter, filterStrength)
     }
     override fun onCycleFlash() {

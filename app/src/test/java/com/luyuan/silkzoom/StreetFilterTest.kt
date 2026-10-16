@@ -4,23 +4,26 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class StreetFilterTest {
-    private fun color(matrix: FloatArray, red: Float, green: Float, blue: Float): FloatArray =
-        FloatArray(3) { row -> matrix[row * 5] * red + matrix[row * 5 + 1] * green + matrix[row * 5 + 2] * blue + matrix[row * 5 + 4] }
-    @Test fun zeroStrengthPreservesOriginalForEveryPreset() {
-        val identity = StreetFilter.ORIGINAL.matrix(1f)
-        StreetFilter.entries.forEach { assertArrayEquals(identity, it.matrix(0f), .0001f) }
-    }
-    @Test fun monochromeProducesEqualColorChannels() {
-        val result = color(StreetFilter.MONO.matrix(1f), 180f, 90f, 30f)
-        assertEquals(result[0], result[1], .0001f)
-        assertEquals(result[1], result[2], .0001f)
-    }
-    @Test fun strengthInterpolatesAndNeverChangesAlpha() {
-        StreetFilter.entries.forEach {
-            val full = color(it.matrix(1f), 100f, 80f, 60f)
-            val half = color(it.matrix(.5f), 100f, 80f, 60f)
-            assertEquals((100f + full[0]) / 2, half[0], .0001f)
-            assertArrayEquals(floatArrayOf(0f,0f,0f,1f,0f), it.matrix(1f).copyOfRange(15,20), .0001f)
+    @Test fun preservesAlphaAndStrengthZeroAndBlendsHalfway() {
+        for (filter in StreetFilter.entries) {
+            val input=0x71944b24
+            assertEquals(input,filter.lut.color(input,0f))
+            val full=filter.lut.color(input);val half=filter.lut.color(input,.5f)
+            assertEquals(0x71,full ushr 24)
+            for(shift in listOf(0,8,16)) assertEquals(((input ushr shift and 255)+(full ushr shift and 255))/2f,(half ushr shift and 255).toFloat(),1f)
         }
+    }
+    @Test fun monochromeIsNeutralButBlueIsTinted() {
+        val gray=StreetFilter.MONO.lut.color(0xffb45a1e.toInt())
+        assertEquals(gray ushr 16 and 255,gray ushr 8 and 255);assertEquals(gray ushr 8 and 255,gray and 255)
+        val blue=StreetFilter.valueOf("MONO_BLUE").lut.color(0xffb45a1e.toInt())
+        assertTrue((blue and 255)>(blue ushr 8 and 255));assertTrue((blue ushr 8 and 255)>(blue ushr 16 and 255))
+    }
+    @Test fun namedLooksAreDistinctAndBrandAttributionIsExplicit() {
+        assertEquals(20,StreetFilter.entries.size)
+        assertEquals(20,StreetFilter.entries.map { it.name }.toSet().size)
+        val samples=listOf(0xffb45a1e.toInt(),0xff3060b0.toInt(),0xff93bb6b.toInt(),0xff202020.toInt())
+        assertEquals(20,StreetFilter.entries.map { f -> samples.map { f.lut.color(it) } }.toSet().size)
+        StreetFilter.entries.filter { it.name.startsWith("HASSEL")||it.name.startsWith("LEICA") }.forEach { assertTrue(it.description.contains("自定义"));assertTrue(it.description.contains("不是")) }
     }
 }

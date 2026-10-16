@@ -24,6 +24,9 @@ class UiPreviewActivity : ComponentActivity(), CameraOverlayView.Listener {
     private lateinit var host: FrameLayout
     private lateinit var preview: PreviewView
     private lateinit var zoomController: SmoothZoomController
+    private val lutProcessor by lazy { LutSurfaceProcessor { } }
+    private var debugFilter=StreetFilter.ORIGINAL
+    private var debugStrength=1f
     private var displayZoom = 1f
     private var demoPlan: CompositionPlan? = null
     private var demoGoal = 3.2f
@@ -86,16 +89,25 @@ class UiPreviewActivity : ComponentActivity(), CameraOverlayView.Listener {
         capture = photo
         val group = UseCaseGroup.Builder().addUseCase(useCase).addUseCase(photo)
         preview.viewPort?.let { group.setViewPort(it) }
+        group.addEffect(lutProcessor.effect)
         provider?.unbindAll(); provider?.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, group.build())
     }
-    override fun onPreviewAreaChanged(left: Int, top: Int, width: Int, height: Int) { host.layoutParams = FrameLayout.LayoutParams(width,height).apply { leftMargin=left;topMargin=top } }
+    override fun onPreviewAreaChanged(left: Int, top: Int, width: Int, height: Int) {
+        host.layoutParams = FrameLayout.LayoutParams(width,height).apply { leftMargin=left;topMargin=top }
+        if(intent.getStringExtra("state")=="crop-square") {
+            val aspect=width.toFloat()/height
+            retainedWidth=minOf(1f,1f/aspect);retainedHeight=minOf(1f,aspect)
+            cameraUi.setPhotoCrop(retainedWidth,retainedHeight)
+            cameraUi.setComposition(true,.5f to .5f,.5f to .5f,ready=true)
+        }
+    }
     override fun onCapture() {
         val photo = capture ?: return
         val width = retainedWidth; val height = retainedHeight; val zoom = displayZoom
         cameraUi.setSaving(true)
         photo.takePicture(photoExecutor, object : ImageCapture.OnImageCapturedCallback() {
             override fun onCaptureSuccess(image: ImageProxy) {
-                val saved = runCatching { PhotoSaver.save(applicationContext, image, zoom, StreetFilter.ORIGINAL, 1f, width, height) }
+                val saved = runCatching { PhotoSaver.save(applicationContext, image, zoom, debugFilter, debugStrength, width, height) }
                 runOnUiThread { cameraUi.setSaving(false); cameraUi.showMessage(if (saved.isSuccess) "已保存到相册" else "照片保存失败") }
             }
             override fun onError(exception: ImageCaptureException) {
@@ -114,14 +126,12 @@ class UiPreviewActivity : ComponentActivity(), CameraOverlayView.Listener {
     override fun onEndComposition() { demoPlan = null; zoomController.beginInteraction(); cameraUi.setZoomAnimating(false); cameraUi.setComposition(false) }
     override fun onSettings() = Unit
     override fun onFilters() {
-        if (cameraUi.filtersVisible) cameraUi.closePanels()
-        else cameraUi.openFilters(preview.bitmap?.let { image -> val factor = minOf(1f, 256f / maxOf(image.width, image.height))
-            Bitmap.createScaledBitmap(image, (image.width * factor).toInt().coerceAtLeast(1), (image.height * factor).toInt().coerceAtLeast(1), true).also { if (it !== image) image.recycle() } })
+        if(cameraUi.filtersVisible)cameraUi.closePanels() else {
+            cameraUi.openFilters(null);lutProcessor.snapshotRaw { bitmap -> if(bitmap!=null)runOnUiThread { if(!isDestroyed)cameraUi.setFilterPreview(bitmap) else bitmap.recycle() } }
+        }
     }
-    override fun onFilterChanged(filter: StreetFilter, strength: Float) {
-        val paint = android.graphics.Paint().apply { colorFilter = android.graphics.ColorMatrixColorFilter(android.graphics.ColorMatrix(filter.matrix(strength))) }
-        preview.setLayerType(android.view.View.LAYER_TYPE_HARDWARE, paint); preview.setLayerPaint(paint); cameraUi.setFilter(filter, strength)
-    }
+    override fun onFilterChanged(filter:StreetFilter,strength:Float) { debugFilter=filter;debugStrength=strength;lutProcessor.setFilter(filter,strength);cameraUi.setFilter(filter,strength) }
+    override fun onFilterInfo(filter:StreetFilter) { cameraUi.showMessage(filter.description) }
     override fun onOpenPhoto() { cameraUi.showMessage("调试预览，请在相机主界面查看照片") }
     override fun onCycleFlash() = Unit
     override fun onZoomGestureStart() { onEndComposition(); zoomController.beginInteraction() }
@@ -130,5 +140,5 @@ class UiPreviewActivity : ComponentActivity(), CameraOverlayView.Listener {
     override fun onLensStopSelected(zoomRatio: Float) { onEndComposition(); zoomController.animateTo(zoomRatio) }
     override fun onResolutionSelected(preset: ResolutionPreset) = Unit
     override fun onTapToFocus(x: Float, y: Float) = Unit
-    override fun onDestroy() { if (::zoomController.isInitialized) zoomController.cancel(); provider?.unbindAll(); photoExecutor.shutdown(); super.onDestroy() }
+    override fun onDestroy() { if (::zoomController.isInitialized) zoomController.cancel(); provider?.unbindAll(); photoExecutor.shutdown();lutProcessor.close(); super.onDestroy() }
 }

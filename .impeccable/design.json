@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-16T15:28:08.207485+00:00",
+  "generatedAt": "2026-10-16T19:08:35.245772+00:00",
   "title": "Design System: 街拍相机 · Native Camera",
   "extensions": {
     "colorMeta": {
@@ -315,7 +315,14 @@
         "app/src/main/java/com/luyuan/silkzoom/AiSettingsDialog.kt",
         "app/src/main/java/com/luyuan/silkzoom/StreetFilter.kt",
         "app/src/main/res/values/themes.xml",
-        "app/src/main/res/values-night/themes.xml"
+        "app/src/main/res/values-night/themes.xml",
+        "app/src/main/java/com/luyuan/silkzoom/MainActivity.kt",
+        "app/src/main/java/com/luyuan/silkzoom/LutStore.kt",
+        "app/src/main/java/com/luyuan/silkzoom/LutSurfaceProcessor.kt",
+        "app/src/main/java/com/luyuan/silkzoom/LutBitmap.kt",
+        "app/src/main/java/com/luyuan/silkzoom/CubeLut.kt",
+        "app/src/main/java/com/luyuan/silkzoom/PhotoSaver.kt",
+        "app/src/main/java/com/luyuan/silkzoom/AiCompositionClient.kt"
       ],
       "authority": "User-pinned camera-photo.jpg and camera-filters.jpg under .impeccable/references; current source resolves implementation facts.",
       "previewStates": "Specimens are static source-derived examples. Filter-card and ruler focus geometry mirrors current native source; other CSS focus affordances support browser inspection. Android owns the documented keyboard actions.",
@@ -331,9 +338,26 @@
           "柔和",
           "暖调",
           "冷调",
-          "黑白"
+          "黑白",
+          "哈苏自然",
+          "哈苏电影",
+          "徕卡自然",
+          "徕卡鲜艳",
+          "徕卡经典",
+          "徕卡高反",
+          "电影青橙",
+          "黑金",
+          "繁花如梦",
+          "正片",
+          "负片",
+          "飘棕",
+          "单色蓝",
+          "赤霞红",
+          "远山青",
+          "电影60s",
+          "电影80s"
         ],
-        "pixels": "Actual camera preview with full-strength preset matrix; no reference screenshot or stock photo assets.",
+        "pixels": "Raw ungraded camera-backed source; full-strength LUT card thumbnails. Preview/save use the same quantized RGB LUT data, trilinear interpolation and strength blend; no stock/reference photos.",
         "selection": "2dp white border; no colored fill.",
         "strength": "0–100 native range; 2-point ticks, 10-point majors, ±5 accessibility actions.",
         "close": "Photo or Android Back; shutter position preserved.",
@@ -343,7 +367,15 @@
           "strength": "1.5dp red outline,6dp corners; inset2dp horizontally,1dp vertically.",
           "keys": "Left -2 percentage points; Right +2; Home0; End100. Up/Down delegate to native focus navigation.",
           "redraw": "Card and strength range invalidate on focus changes."
-        }
+        },
+        "catalog": "22 installed options including Original:20 application presets +2 bundled licensed cinema LUTs; user-imported .cube files extend the catalog.",
+        "rendering": "Off-UI-thread on-demand selected, visible, then neighboring card previews; scroll refresh is debounced60ms. Raw-frame readiness retries up to8s; keep the established empty-preview region until pixels arrive.",
+        "panel": "Existing148dp region:92dp cards +56dp strength. No category/info/import/manage toolbar above cards.",
+        "settings": "Category/current information/import/management live in Settings. Categories全部/色彩/胶片/单色/我的LUT; Original remains available in each. Category persists; imports select我的LUT.",
+        "information": "Long-press a card for its description; full accessible name retained while visual labels longer than5 characters truncate to4 plus ellipsis.",
+        "provenance": "Hasselblad/Leica-inspired application looks explicitly state custom interpretation, not official originals. 电影60s/电影80s are bundled Striped Purple/Nixua Cinema Through The Ages LUTs underMIT with attribution in descriptions.",
+        "imports": "System .cube picker, application-private persistence and deletion in management/info; deleting active imported look restoresOriginal. Imported LUT info statesSDR input and Log/HDR input-space matching.",
+        "failure": "GPU LUT failure returns toOriginal with transient feedback; save uses currently displayed filter/strength."
       },
       "zoomRuler": {
         "touchWidth": "48dp",
@@ -365,7 +397,7 @@
         "meaning": "Phone movement."
       },
       "freeCrop": {
-        "aspect": "Independent retained width/height, arbitrary ratio.",
+        "aspect": "Independent crop fractions with explicit physical aspect_ratio = current image width/height × crop_width/crop_height; horizontal/square/vertical output independent of phone orientation. Physical aspect wins over inconsistent rounded fractions.",
         "stroke": "White1dp over dark3dp; white2dp corners up to12dp or shorter dimension/4.",
         "persistence": "Completed retained crop stays visible after guidance ends; output centered with rotation-aware axes.",
         "scrim": "None."
@@ -418,7 +450,7 @@
     {
       "name": "Inline filter card",
       "kind": "button",
-      "description": "Selected card before preview pixels arrive; production fills this region with the actual camera image, never a stock photograph. Native keyboard focus adds a red outer outline while retaining the white selected preview border.",
+      "description": "Selected card before raw camera pixels arrive. The22-option installed catalog plus imported .cube looks uses on-demand LUT thumbnails. Long-press opens information; native red outer focus preserves the white selection border. No category/import toolbar belongs above the card.",
       "html": "<button class=\"ds-filter\" aria-pressed=\"true\"><span></span><strong>原片</strong></button>",
       "css": ".ds-filter{display:block;width:76px;height:92px;padding:3px;border:0;background:transparent;color:white;font:13px sans-serif;cursor:pointer}.ds-filter span{display:block;height:64px;background:#171717;border-radius:2px;outline:2px solid white;outline-offset:-1px}.ds-filter strong{display:block;margin-top:8px;font:inherit}.ds-filter:hover{background:transparent}.ds-filter{position:relative}.ds-filter:focus-visible{outline:0}.ds-filter:focus-visible::after{content:\"\";position:absolute;inset:0;border:2px solid #FF3B3B;border-radius:4px;pointer-events:none}.ds-filter:active{opacity:.8}.ds-filter:disabled{opacity:.45}",
       "refersTo": "filter-card"
@@ -456,7 +488,7 @@
     {
       "name": "Viewfinder reference and crop",
       "kind": "custom",
-      "description": "Golden-section reference grid, inactive red cross and retained white arbitrary-ratio crop; sample dimensions are not aspect-ratio tokens.",
+      "description": "Golden-section reference grid, inactive red cross and retained arbitrary-ratio crop. Physical width/height governs the output independently of phone orientation; sample dimensions are not aspect tokens.",
       "html": "<svg class=\"ds-guides\" viewBox=\"0 0 240 180\" width=\"240\" height=\"180\" role=\"img\" aria-label=\"参考线和自由裁切范围\"><path class=\"ds-grid\" d=\"M91.68 0V180 M148.32 0V180 M0 68.76H240 M0 111.24H240\"/><path class=\"ds-grid-corners\" d=\"M20 0H0V20 M220 0H240V20 M0 160V180H20 M220 180H240V160\"/><path class=\"ds-cross\" d=\"M109 90H131 M120 79V101\"/><rect class=\"ds-crop-under\" x=\"30\" y=\"35\" width=\"180\" height=\"110\"/><rect class=\"ds-crop\" x=\"30\" y=\"35\" width=\"180\" height=\"110\"/><path class=\"ds-crop-corners\" d=\"M42 35H30V47 M198 35H210V47 M42 145H30V133 M198 145H210V133\"/></svg>",
       "css": ".ds-guides path,.ds-guides rect{fill:none;stroke-linecap:round}.ds-grid{stroke:#FFFFFF55;stroke-width:.6}.ds-grid-corners{stroke:#FFFFFF55;stroke-width:1}.ds-cross{stroke:#FF3B3B;stroke-width:1}.ds-crop-under{stroke:#081B1364;stroke-width:3}.ds-crop{stroke:white;stroke-width:1}.ds-crop-corners{stroke:white;stroke-width:2}"
     }
@@ -502,11 +534,12 @@
       "Do use red for active camera text and white for the selected filter border.",
       "Do populate filter cards and the recent-photo control with actual camera or saved-image pixels.",
       "Do keep the shutter fixed when showing filters and close the strip through Photo or Android Back.",
-      "Do honor disabled system animation for filter reveal, local search and automatic framing."
+      "Do honor disabled system animation for filter reveal, local search and automatic framing.",
+      "Do keep filter category, information, import and management in Settings; reserve the viewfinder strip for cards and strength."
     ],
     "donts": [
       "Don't bring filled colored tiles or a modal filter sheet into this camera surface.",
-      "Don't copy reference branding, beauty controls, video modes, front-camera switching or unsupported optical focal lengths.",
+      "Don't claim custom manufacturer-inspired looks are manufacturer-original LUTs, copy reference logos, or add beauty/video/front-camera controls or unsupported optics.",
       "Don't replace live filter previews with sample photographs.",
       "Don't present subjective AI ranking as an objective image-quality score."
     ]
