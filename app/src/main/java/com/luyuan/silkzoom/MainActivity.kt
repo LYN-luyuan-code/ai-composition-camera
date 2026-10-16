@@ -30,7 +30,8 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
     private lateinit var overlayView: CameraOverlayView
     private lateinit var aiSettings: AiSettingsStore
     private var settingsDialog: AlertDialog? = null
-    private var filterDialog: AlertDialog? = null
+    private var lastPhotoUri: android.net.Uri? = null
+    private var thumbnailBitmap: Bitmap? = null
     private val aiExecutor = Executors.newSingleThreadExecutor()
     private val photoExecutor = Executors.newSingleThreadExecutor()
     private var aiRequest: AiCompositionClient? = null
@@ -143,6 +144,14 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
         }
         setContentView(root)
         applyFilter()
+        preferences.getString("last_photo_uri", null)?.takeIf { it.startsWith("content://media/") }?.let {
+            lastPhotoUri = android.net.Uri.parse(it); refreshThumbnail(lastPhotoUri!!)
+        }
+        onBackPressedDispatcher.addCallback(this, object : androidx.activity.OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (!overlayView.closePanels()) { isEnabled = false; onBackPressedDispatcher.onBackPressed(); isEnabled = true }
+            }
+        })
         if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) startCamera() else permission.launch(Manifest.permission.CAMERA)
     }
 
@@ -152,7 +161,7 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
     }
     override fun onStop() { cancelComposition(); super.onStop() }
     override fun onDestroy() {
-        filterDialog?.dismiss(); settingsDialog?.dismiss(); previewAnalysis?.clearAnalyzer(); zoomController?.cancel(); cameraProvider?.unbindAll()
+        settingsDialog?.dismiss(); previewAnalysis?.clearAnalyzer(); zoomController?.cancel(); cameraProvider?.unbindAll()
         compositionExecutor.shutdownNow(); aiExecutor.shutdownNow(); analysisExecutor.shutdownNow()
         // Let a photograph already being written finish and clear its MediaStore pending flag.
         photoExecutor.shutdown()
@@ -510,6 +519,11 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
                 val outcome = runCatching { PhotoSaver.save(applicationContext, image, zoom, filter, strength, retainedWidth, retainedHeight) }
                 runOnUiThread {
                     savingPhoto = false; overlayView.setSaving(false)
+                    outcome.getOrNull()?.let { uri ->
+                        lastPhotoUri = uri
+                        getSharedPreferences("camera_settings", MODE_PRIVATE).edit().putString("last_photo_uri", uri.toString()).apply()
+                        if (!isDestroyed) refreshThumbnail(uri)
+                    }
                     overlayView.showMessage(if (outcome.isSuccess) "已保存到相册" else "照片保存失败，请重试")
                 }
             }
@@ -517,11 +531,36 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
         })
     }
     override fun onFilters() {
-        if (filterDialog?.isShowing == true) return
-        filterDialog = FilterSheet.show(this, streetFilter, filterStrength) { filter, strength ->
-            streetFilter = filter; filterStrength = strength
-            getSharedPreferences("camera_settings", MODE_PRIVATE).edit().putString("street_filter", filter.name).putFloat("filter_strength", strength).apply()
-            applyFilter()
+        if (overlayView.filtersVisible) { overlayView.closePanels(); return }
+        cancelComposition(); zoomController?.beginInteraction()
+        val original = previewView.bitmap
+        val preview = original?.let {
+            val cropped = PhotoSaver.cropPreview(it, currentDisplayZoom)
+            val factor = minOf(1f, 256f / maxOf(cropped.width, cropped.height))
+            val sample = Bitmap.createScaledBitmap(cropped, (cropped.width * factor).toInt().coerceAtLeast(1), (cropped.height * factor).toInt().coerceAtLeast(1), true)
+            if (cropped !== it && cropped !== sample) cropped.recycle()
+            if (it !== sample) it.recycle()
+            sample
+        }
+        overlayView.openFilters(preview)
+    }
+    override fun onFilterChanged(filter: StreetFilter, strength: Float) {
+        streetFilter = filter; filterStrength = strength
+        getSharedPreferences("camera_settings", MODE_PRIVATE).edit().putString("street_filter", filter.name).putFloat("filter_strength", strength).apply()
+        applyFilter()
+    }
+    override fun onOpenPhoto() {
+        val uri = lastPhotoUri ?: run { overlayView.showMessage("拍摄后可在这里查看最近照片"); return }
+        try { startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW).setDataAndType(uri, "image/jpeg").addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION)) }
+        catch (_: android.content.ActivityNotFoundException) { overlayView.showMessage("没有可用的图片查看器") }
+    }
+    private fun refreshThumbnail(uri: android.net.Uri) {
+        photoExecutor.execute {
+            val bitmap = runCatching { contentResolver.loadThumbnail(uri, Size(160, 160), null) }.getOrNull()
+            runOnUiThread {
+                if (isDestroyed || lastPhotoUri != uri) { bitmap?.recycle(); return@runOnUiThread }
+                bitmap?.let { val old = thumbnailBitmap; thumbnailBitmap = it; overlayView.setPhotoThumbnail(it); old?.recycle() }
+            }
         }
     }
     private fun applyFilter() {

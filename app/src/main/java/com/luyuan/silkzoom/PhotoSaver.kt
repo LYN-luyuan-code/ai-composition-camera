@@ -16,7 +16,7 @@ import java.util.Date
 import java.util.Locale
 
 internal object PhotoSaver {
-    fun save(context: Context, image: ImageProxy, zoom: Float, filter: StreetFilter, strength: Float, retainedWidth: Float = 1f, retainedHeight: Float = 1f) {
+    fun save(context: Context, image: ImageProxy, zoom: Float, filter: StreetFilter, strength: Float, retainedWidth: Float = 1f, retainedHeight: Float = 1f): android.net.Uri {
         var source: Bitmap? = null
         var output: Bitmap? = null
         try {
@@ -47,6 +47,7 @@ internal object PhotoSaver {
                 resolver.openOutputStream(uri)?.use { stream -> check(output.compress(Bitmap.CompressFormat.JPEG, 94, stream)) }
                     ?: error("无法写入照片")
                 check(resolver.update(uri, ContentValues().apply { put(MediaStore.Images.Media.IS_PENDING, 0) }, null, null) > 0)
+                return uri
             } catch (failure: Throwable) {
                 resolver.delete(uri, null, null)
                 throw failure

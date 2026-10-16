@@ -4,8 +4,10 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.MotionEvent
+import android.view.KeyEvent
 import android.view.View
 import android.view.ViewConfiguration
 import android.view.accessibility.AccessibilityNodeInfo
@@ -47,8 +49,12 @@ internal class ZoomGestureBar(context: Context) : View(context) {
     override fun onDraw(canvas: Canvas) {
         val x = width / 2f
         panel.set(dp(4f), 0f, width - dp(4f), height.toFloat())
-        paint.style = Paint.Style.FILL; paint.color = theme.raised
+        paint.style = Paint.Style.FILL; paint.color = if (active) 0xAA000000.toInt() else 0x44000000
         canvas.drawRoundRect(panel, dp(20f), dp(20f), paint)
+        if (isFocused) {
+            paint.style = Paint.Style.STROKE; paint.strokeWidth = dp(2f); paint.color = theme.accent
+            canvas.drawRoundRect(panel, dp(20f), dp(20f), paint); paint.style = Paint.Style.FILL
+        }
         paint.strokeCap = Paint.Cap.ROUND; paint.strokeWidth = dp(1.5f); paint.color = theme.ink
         canvas.drawLine(x - dp(4f), dp(15f), x + dp(4f), dp(15f), paint)
         canvas.drawLine(x, dp(11f), x, dp(19f), paint)
@@ -63,7 +69,7 @@ internal class ZoomGestureBar(context: Context) : View(context) {
             canvas.drawLine(x - dp(4f), y, x + dp(4f), y, paint)
         }
         val thumb = railBottom - ZoomScale.fraction(zoom, minZoom, maxZoom) * (railBottom - railTop)
-        paint.color = theme.guide; paint.strokeWidth = dp(if (active) 3f else 2f)
+        paint.color = theme.accent; paint.strokeWidth = dp(if (active) 3f else 2f)
         canvas.drawLine(x, thumb, x, railBottom, paint)
         paint.style = Paint.Style.FILL
         canvas.drawCircle(x, thumb, dp(if (active) 6f else 4.5f), paint)
@@ -71,6 +77,20 @@ internal class ZoomGestureBar(context: Context) : View(context) {
         canvas.drawCircle(x, thumb, dp(1.5f), paint)
     }
 
+    override fun onFocusChanged(gainFocus: Boolean, direction: Int, previouslyFocusedRect: Rect?) {
+        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect); invalidate()
+    }
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (!isEnabled) return super.onKeyDown(keyCode, event)
+        val desired = when (keyCode) {
+            KeyEvent.KEYCODE_DPAD_UP, KeyEvent.KEYCODE_PLUS, KeyEvent.KEYCODE_EQUALS -> zoom * 1.1f
+            KeyEvent.KEYCODE_DPAD_DOWN, KeyEvent.KEYCODE_MINUS -> zoom / 1.1f
+            KeyEvent.KEYCODE_MOVE_HOME -> minZoom
+            KeyEvent.KEYCODE_MOVE_END -> maxZoom
+            else -> return super.onKeyDown(keyCode, event)
+        }
+        onBegin?.invoke(); onChange?.invoke(desired.coerceIn(minZoom, maxZoom)); onEnd?.invoke(); return true
+    }
     private fun changeAt(y: Float) {
         onChange?.invoke(ZoomScale.value(downFraction + (downY - y) / (railBottom - railTop), minZoom, maxZoom))
     }

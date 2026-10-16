@@ -1,31 +1,21 @@
 # Camera surface
 
-Mode: Operate. Platform: Android Views. Execution: code-led.
+Mode: Operate. Platform: Android Views. Execution: code-led, user-supplied native reference.
 
-## Direction contract
+## Authority and thesis
+The user's 2026-10-16 request “ui做成这样的” pins the two supplied screenshots. They replace the earlier Soft/mint camera chrome. Reference files are `.impeccable/references/camera-photo.jpg` and `camera-filters.jpg`, copied without alteration from the user's attachments. These are functional and layout references, not shipping image assets or authorization for Leica branding, extra camera modes or unavailable optics.
 
-### Brief and authority
-The user explicitly pins Soft design and asks to implement this scope now, with details to follow. That instruction takes precedence over a new aesthetic-choice interview. Existing black-and-gold chrome is replaced.
+## Own world
+Black camera ground, bare white drawn icons, restrained red selected text and ruler marker. Native system sans. No filled rounded tiles behind every control. Auxiliary settings retain native form semantics and neutral day/night surfaces with red accents.
 
-### Direction
-Seed 2906b7bf assigned candidate 7. Grounded candidates considered: soft stationery, muted photo-book paper, pale architectural signage, fabric swatches, rounded print labels, quiet transit wayfinding, and smooth ceramic surfaces. Candidate 7 is used within the user's Soft constraint: tactile, low-shadow neutral surfaces, gentle mint selection, system type, no imitation of camera hardware.
+## First viewport
+Full-screen live preview stays behind the chrome. Flash at upper left, a small centered down-chevron for camera options, filter and settings controls at upper right. Fine golden-section grid and corner marks, with a small red center cross. At the bottom: bare 1 / 1.5 / 2 / 3 zoom stops, a photo/filter switch, large double-circle white manual shutter, recent saved-photo thumbnail to its left and AI framing control to its right. The AI control replaces the reference camera-switch action because this app uses the main rear camera.
 
-### First viewport
-A full-screen live viewfinder under all chrome, with no card frame or separate surface. Compact translucent flash/quality/settings controls float at the top; local dark backings keep small labels readable against bright scenes; a normal white shutter and quiet zoom strip float at the bottom. This follows the user correction “相机界面全屏幕，不要遮住 / UI正常一点”. Filters sit left of the shutter; AI composition sits immediately right. No video, front-camera toggle, basic/AI switch or stack of pills over the image.
+## Story and interactions
+One tap on Filters opens an inline horizontal strip of previews of the actual current camera image, with the existing five filters and a tick ruler for strength. Manual shutter stays in place and remains available. Photo tab or Android Back closes the strip. Down-chevron reveals quality and grid options; settings opens existing supplier/key configuration. Recent-photo control opens this app's last saved image. Continuous quintic zoom, direct gesture takeover, auto subject discovery, free-aspect crop, straight thick semi-transparent guide arrow and local non-obscuring search animation remain functional. The narrow zoom gesture indicator joins the white/red palette and never sits over the filter controls.
 
-### Signature interaction
-A straight, thick semi-transparent arrow translates the subject-position error into the direction the user moves the phone; a small target ring approaches the central aim dot as alignment improves. Search motion stays local to the chosen point and composition control. No opaque viewfinder scrim.
+## Form and adaptation
+Seed key `1728a8b4` was generated for this replacement. The user's pinned reference overrides the assigned visual alternatives, including their topology; native code-led implementation follows the supplied camera screenshots directly. Portrait is the reference form; landscape uses a compact right-hand control rail, tablet uses physically sized controls. Every interactive target is at least 48dp. UI spacing respects system insets and font scaling; system animation disable is honored.
 
-### Visual and motion grammar
-Camera chrome uses white text on small translucent charcoal controls in both day and night, with mint active states and no full-width opaque panel. Dialogs use Soft neutral day/night palettes. OPPO Find X10 LUMO 灵感构图 is the functional reference (official page https://www.oppo.com/cn/smartphones/series-find-x/find-x10/); the ring/phone-motion arrow is our implementation of the user brief, not a claimed pixel copy. 48dp minimum controls, native accessibility semantics, system insets. Subtle 180–240ms feedback; ongoing searching respects disabled system animation.
-
-### Acceptance
-Photo only; default rear camera held at native 1x; software crop and filters reflected in saved output; existing encrypted provider keys preserved. Portrait, landscape, font scaling, dark mode, loading, guidance, failure and disabled states checked on Android emulator. API performance and physical-device optics are not claimed from emulator evidence.
-
-### Free-crop extension
-The user supplied a photography-analysis brief and explicitly removed aspect-ratio constraints. AI now chooses independent retained width/height; thin crop outlines and corners mark the photo area without a scrim. Completed free crops persist visibly after ending guidance; the saved JPEG uses the same centered region, with rotation-aware axis mapping. No new scoring screens or analysis-mode navigation are added.
-
-User steering: arrow is straight and bold with slight transparency: 8dp shaft/head strokes, 185/255 alpha, 14dp head, rounded caps; 11dp low-alpha contrast under-stroke.
-
-### Automatic discovery and smooth zoom extension
-User steering: automatically discover the highest-priority artistic subject, including light/shadow/reflection/geometry/narrative; increase zoom easing; continuously enlarge after confirming the free crop; add a gesture indicator. Native right-edge 48dp touch ruler shows a compact plus/minus, current zoom and log-spaced ticks, supports direct dragging/accessibility, and yields to other camera gestures. Automatic framing uses a single continuous quintic log-zoom trajectory, interruptible and paused on tracking loss; preserves free-crop aspect and manual shutter. Composition point rendering compensates for the display zoom between tracking samples. No new navigation or full-width panels.
+## Acceptance and truth
+No opaque viewfinder scrim. Main rear camera only, photo only, manual shutter. Existing encrypted provider keys and crop geometry unchanged. No invented film/Leica presets, beauty modes or optical zoom labels. Camera-backed inline filter cards must use real preview pixels, not sample photos. Native phone/tablet, landscape, large font, filter selection/strength/Back and photo saving are checked in one bounded batch and one confirmation if needed. AI model efficacy and physical-device optics are not inferred from emulator scenes.

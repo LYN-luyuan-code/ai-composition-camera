@@ -1,263 +1,246 @@
 ---
-name: "街拍相机 · Soft Android"
-description: "Full-screen native camera with quiet mint guidance and compact floating controls."
+name: "街拍相机 · Native Camera"
+description: "Full-screen black camera chrome, bare white controls, red selection and inline camera-backed filters."
 colors:
-  dialog-accent: "#2E6951"
-  dialog-accent-night: "#A9D5BD"
-  camera-mint: "#C3EAD2"
-  dialog-selected: "#DDECE1"
-  dialog-selected-night: "#3C5649"
-  camera-selected: "#345C47EE"
-  dialog-surface: "#F1F4F1"
-  dialog-surface-night: "#202624"
-  dialog-raised: "#FDFEFC"
-  dialog-raised-night: "#303835"
-  dialog-ink: "#233C31"
-  dialog-ink-night: "#F0F4F1"
-  dialog-muted: "#536A5D"
-  dialog-muted-night: "#BBC8C1"
-  camera-backing: "#202523B3"
-  camera-ink: "#FFFFFF"
-  camera-muted: "#E2E7E4"
-  camera-rail: "#FFFFFFAA"
+  camera-black: "#000000"
+  camera-white: "#FFFFFF"
+  camera-red: "#FF3B3B"
+  control-charcoal: "#242424"
+  rail-white: "#FFFFFFAA"
+  grid-white: "#FFFFFF55"
+  ruler-gray: "#8D8D8D"
+  preview-empty: "#171717"
+  status-black: "#00000099"
+  options-charcoal: "#121212E6"
+  zoom-idle-black: "#00000044"
+  zoom-active-black: "#000000AA"
+  edge-black: "#000000F5"
+  fade-middle-black: "#000000C9"
+  dialog-red: "#C62828"
+  dialog-red-night: "#FF6B6B"
 typography:
-  title:
+  navigation:
     fontFamily: "sans"
-    fontSize: "20sp"
-  body:
+    fontSize: "15sp"
+  strength:
     fontFamily: "sans"
     fontSize: "14sp"
   label:
     fontFamily: "sans"
     fontSize: "13sp"
-  caption:
-    fontFamily: "sans"
-    fontSize: "12sp"
-  zoom-readout:
+  compact:
     fontFamily: "sans"
     fontSize: "11sp"
 rounded:
-  message: "12dp"
-  control: "16dp"
-  sheet: "24dp"
+  filter-preview: "2dp"
+  photo-thumbnail: "3dp"
+  status: "8dp"
+  options: "12dp"
+  chevron: "18dp"
   zoom-ruler: "20dp"
+  ripple-mask: "24dp"
 spacing:
-  4: "4dp"
-  8: "8dp"
-  10: "10dp"
-  12: "12dp"
-  16: "16dp"
-  20: "20dp"
-  24: "24dp"
+  "4": "4dp"
+  "6": "6dp"
+  "8": "8dp"
+  "12": "12dp"
+  "16": "16dp"
+  "20": "20dp"
+  "24": "24dp"
 components:
+  bare-icon:
+    backgroundColor: "transparent"
+    textColor: "{colors.camera-white}"
+    padding: "12dp"
+    size: "48dp"
+  bare-zoom:
+    backgroundColor: "transparent"
+    textColor: "{colors.camera-white}"
+    typography: "{typography.navigation}"
+    size: "48dp"
+  bare-zoom-selected:
+    backgroundColor: "transparent"
+    textColor: "{colors.camera-red}"
+    typography: "{typography.navigation}"
+    size: "48dp"
+  mode:
+    backgroundColor: "transparent"
+    textColor: "{colors.camera-white}"
+    typography: "{typography.navigation}"
+    width: "72dp"
+    height: "48dp"
+  mode-selected:
+    backgroundColor: "transparent"
+    textColor: "{colors.camera-red}"
+    typography: "{typography.navigation}"
+    width: "72dp"
+    height: "48dp"
+  options-chevron:
+    backgroundColor: "{colors.control-charcoal}"
+    textColor: "{colors.camera-white}"
+    rounded: "{rounded.chevron}"
+    width: "36dp"
+    height: "28dp"
+  manual-shutter:
+    backgroundColor: "transparent"
+    textColor: "{colors.camera-white}"
+    size: "80dp"
+  filter-card:
+    backgroundColor: "transparent"
+    textColor: "{colors.camera-white}"
+    typography: "{typography.label}"
+    width: "76dp"
+    height: "92dp"
+  filter-strength:
+    backgroundColor: "transparent"
+    textColor: "{colors.camera-white}"
+    typography: "{typography.strength}"
+    height: "56dp"
   zoom-ruler:
-    backgroundColor: "{colors.camera-backing}"
-    textColor: "{colors.camera-ink}"
-    typography: "{typography.zoom-readout}"
+    backgroundColor: "{colors.zoom-idle-black}"
+    textColor: "{colors.camera-white}"
+    typography: "{typography.compact}"
     rounded: "{rounded.zoom-ruler}"
     width: "40dp"
-  camera-control:
-    backgroundColor: "{colors.camera-backing}"
-    textColor: "{colors.camera-ink}"
-    typography: "{typography.caption}"
-    rounded: "{rounded.control}"
-    padding: "4dp"
-    height: "48dp"
-  camera-zoom-selected:
-    backgroundColor: "{colors.camera-selected}"
-    textColor: "{colors.camera-mint}"
-    typography: "{typography.caption}"
-    rounded: "{rounded.control}"
-    size: "48dp"
-  camera-action:
-    backgroundColor: "{colors.camera-backing}"
-    textColor: "{colors.camera-ink}"
-    typography: "{typography.caption}"
-    rounded: "{rounded.control}"
-    size: "64dp"
-  camera-shutter:
-    backgroundColor: "transparent"
-    textColor: "{colors.camera-ink}"
-    padding: "10dp"
-    size: "80dp"
   camera-status:
-    backgroundColor: "{colors.camera-backing}"
-    textColor: "{colors.camera-muted}"
+    backgroundColor: "{colors.status-black}"
+    textColor: "{colors.camera-white}"
     typography: "{typography.label}"
-    rounded: "{rounded.message}"
-    padding: "4dp 10dp"
-  filter-preset:
-    backgroundColor: "{colors.dialog-raised}"
-    textColor: "{colors.dialog-ink}"
-    typography: "{typography.label}"
-    rounded: "{rounded.control}"
+    rounded: "{rounded.status}"
     padding: "6dp 12dp"
-    width: "76dp"
-    height: "52dp"
-  filter-preset-selected:
-    backgroundColor: "{colors.dialog-selected}"
-    textColor: "{colors.dialog-ink}"
-    typography: "{typography.label}"
-    rounded: "{rounded.control}"
-    padding: "6dp 12dp"
-    width: "76dp"
-    height: "52dp"
-  filter-done:
-    backgroundColor: "{colors.dialog-selected}"
-    textColor: "{colors.dialog-accent}"
-    typography: "{typography.body}"
-    rounded: "{rounded.control}"
-    height: "48dp"
-  filter-sheet:
-    backgroundColor: "{colors.dialog-surface}"
-    rounded: "{rounded.sheet}"
-    padding: "20dp 24dp 24dp"
 ---
 
-# Design System: 街拍相机 · Soft Android
+# Design System: 街拍相机 · Native Camera
 
 ## Overview
 
-**Creative North Star: "Soft Android"**
+**Creative North Star: "Native Camera"**
 
-Soft Android treats the live image as the main material. Small rounded controls float on charcoal backings; white camera controls and mint guidance remain consistent in day and night. Auxiliary dialogs use quiet neutral surfaces that follow the system theme.
+A familiar native camera puts the live image behind a spare black, white and red control system. Bare white icons and text establish the controls; red indicates the selected stop, active task or ready composition. The manual shutter is the largest white shape.
 
-The visual character is gentle, compact and familiar to phone-camera users. Native Android Views, system sans typography, geometric drawn icons and restrained depth carry the interface. AI guidance assists the photographer while the manual shutter remains the capture control.
+The user-supplied photo and filter screenshots pin this visual replacement. Their durable language is monochrome contrast, restrained red selection, a double-circle shutter and inline image previews. The app expresses its own rear-camera-only capabilities through recent-photo and AI controls. Auxiliary provider settings keep native neutral day/night form semantics with red theme accents.
 
 **Key Characteristics:**
 
-- Full-screen image with compact edge controls.
-- Mint selection, white capture affordance and local charcoal contrast.
-- Rounded native controls and neutral day/night dialogs.
-- Local guidance motion with system animation settings respected.
+- Full-screen live image with local black edge fades.
+- Bare white drawn controls and red selected text.
+- Stable shutter with actual camera-backed inline filter previews.
+- Fine reference geometry, bold translucent movement arrow and continuous zoom.
 
-This is a scan of the implemented native Android Views. Sources: `SoftTheme.kt`, `CameraOverlayView.kt`, `FilterSheet.kt`, `AiSettingsDialog.kt`, day/night `themes.xml`, `ZoomGestureBar.kt`, `ZoomMotion.kt`, `SmoothZoomController.kt` and `MainActivity.kt`. Frontmatter dimensions retain native dp/sp; the sidecar browser specimens map one dp/sp unit to one CSS px only for inspection. Android ARGB literals are serialized as CSS RGBA hex without changing their alpha.
+This replaces the previous visual system under the user's 2026-10-16 reference authority. The source is normative: `CameraOverlayView.kt`, `CameraFilterStrip.kt`, `ZoomGestureBar.kt`, `SoftTheme.kt` and day/night `themes.xml`; existing zoom and crop controllers retain their behavior. Frontmatter uses Android dp/sp. Sidecar specimens map one native unit to one CSS px for inspection only; Android ARGB is serialized as CSS RGBA hex.
 
 ## Colors
 
-A muted green accent sits among softly tinted neutrals; live-view chrome uses a dedicated contrast palette.
+Black and white carry the camera; red is sparse state information.
 
 ### Primary
 
-- **Quiet Forest** (`dialog-accent`): native day-theme accent and filter completion text.
-- **Pale Sage** (`dialog-accent-night`): corresponding native night-theme accent.
-- **Camera Mint** (`camera-mint`): selected zoom text, local search arcs and composition guidance.
-- **Soft Selection** (`dialog-selected`, `dialog-selected-night`): selected presets and completion control surfaces.
-- **Deep Mint Selection** (`camera-selected`): nearly opaque active zoom and composition backing.
+- **Camera Red** (`camera-red`): selected zoom/mode text, active flash, active AI label, strength marker, zoom fill/thumb and ready guidance.
+- **Native Form Reds** (`dialog-red`, `dialog-red-night`): system Material day/night accent values in auxiliary settings.
 
 ### Neutral
 
-- **Soft Paper / Deep Green Charcoal** (`dialog-surface`, `dialog-surface-night`): auxiliary surface and window backgrounds.
-- **Raised Paper / Raised Charcoal** (`dialog-raised`, `dialog-raised-night`): idle filter controls.
-- **Forest Ink / Light Ink** (`dialog-ink`, `dialog-ink-night`): main dialog text.
-- **Muted Forest / Muted Sage** (`dialog-muted`, `dialog-muted-night`): supporting copy.
-- **Local Charcoal** (`camera-backing`): individual controls, transient status and compact caption; its alpha is the implemented B3 value.
-- **White / Soft White** (`camera-ink`, `camera-muted`): shutter, camera labels and supporting camera text.
-- **Translucent White Rail** (`camera-rail`): idle zoom track and log-spaced ticks over local charcoal.
+- **Camera Black / Camera White** (`camera-black`, `camera-white`): window ground, controls, shutter, guides, filter labels and selected filter border.
+- **Control Charcoal** (`control-charcoal`): inset down-chevron pill and zoom thumb center.
+- **Rail White / Grid White** (`rail-white`, `grid-white`): range ticks and fine reference geometry.
+- **Ruler Gray / Empty Preview** (`ruler-gray`, `preview-empty`): strength ticks and unpopulated filter preview region.
+- **Local Backings** (`status-black`, `options-charcoal`, `zoom-idle-black`, `zoom-active-black`): transient copy, expanded options and the idle/active zoom ruler.
+- **Edge Fade Blacks** (`edge-black`, `fade-middle-black`): top and bottom contrast gradients.
 
-**The Local Contrast Rule.** Camera labels use their own charcoal backing; contrast support belongs to the control, rather than an opaque panel over the image.
+**The Bare Controls Rule.** Keep ordinary camera controls transparent at rest. Use the small filled chevron, transient status and narrow ruler only where the implementation establishes a local backing.
 
-The frontmatter is the normative palette. Day/night switching applies to auxiliary dialogs; it does not invert live-view chrome. Native ripple uses the current accent at Android alpha 35/255. Tonal ramps in the sidecar are generated inspection aids, not additional shipped colors.
+**The Red State Rule.** Use red to identify selected controls, ruler position and ready guidance. Keep filter-card selection a white outline.
+
+Custom camera chrome does not invert in day/night. Auxiliary settings inherit native neutral Material forms rather than a custom camera card palette. Declared but unused theme fields are not additional active surface tokens. Sidecar tonal ramps are inspection aids, not shipped colors.
 
 ## Typography
 
-**Body Font:** Android system `sans`, supplied by the application theme.
+**Body Font:** Android system `sans` from the application theme.
 
-**Character:** Familiar native typography with a compact ramp and mixed-case controls. Text scales through Android sp; custom camera buttons disable all-caps. The implementation does not specify custom font weight, tracking or line height.
+The compact native hierarchy uses normal platform metrics; no custom weight, tracking or line height is specified. Custom camera text buttons disable all-caps.
 
-### Hierarchy
+- **Navigation** (`navigation`): bare zoom stops and Photo/Filters row.
+- **Strength** (`strength`): filter percentage above the strength ruler.
+- **Label** (`label`): filter names, quality/grid options and transient camera status.
+- **Compact** (`compact`): current zoom readout and AI control caption.
 
-- **Title** (`title`): filter-sheet heading.
-- **Body** (`body`): intensity description and completion action.
-- **Label** (`label`): filter presets and camera transient status.
-- **Caption** (`caption`): camera buttons, zoom stops, zoom/filter caption and provider explanatory note.
-- **Zoom Readout** (`zoom-readout`): compact currentzoom label drawn on the gesture ruler with Android scaled density.
+Provider settings retain native titles, labels, editable fields and actions; their explanatory note is (12sp). These platform defaults do not establish a new custom display or heading ramp.
 
-Settings titles, field labels, spinner, text fields, checkbox and dialog actions retain the platform Material theme's native typography. Do not infer exact sizes for these from the custom filter ramp.
-
-**The Native Type Rule.** Use system sans for native controls and supporting copy; the camera has no display typography layer.
+**The Native Type Rule.** Use Android system sans and the implemented compact sp roles; no display typography layer is established.
 
 ## Layout
 
-**The Image First Rule.** Keep the viewfinder full-screen and let controls float at its edges. Auxiliary sheets and settings dialogs open only for their task.
+The preview and guide layer fill the entire viewport. Top chrome places flash at left, an inset down-chevron at center, and filter/settings at right. Each icon has a (48dp) hit target; the bar is (56dp) high and begins (12dp) below the top system inset. Expanded quality/grid options sit below it in a centered container capped at (320dp).
 
-The camera preview and guide layer occupy the complete measured viewport. In portrait, top controls sit inside the side insets plus a (16dp) gutter, with a (4dp) top inset offset. The bottom controls are centered, limited to (520dp), and inset (8dp) above the safe bottom. Zoom stops are (48dp) squares with (8dp) gaps. The action row uses a central (80dp) shutter view, flanked by (64dp) filter and composition controls with (12dp) gaps; AI is immediately right of the shutter.
+Portrait bottom controls are centered and capped at (480dp), with a (24dp) total horizontal allowance. The action row is (96dp) high and begins (128dp) above the safe bottom. Its shutter is (80dp), recent-photo target (48dp), and AI control (56dp × 64dp). Above it, Photo and Filters occupy (72dp × 48dp) each with a (16dp) gap; bare zoom stops occupy (48dp) each with (4dp) margins on both sides.
 
-Landscape is detected by width greater than height. Bottom controls move to a transparent right-side layout area capped at (264dp) or 45% of width, whichever is smaller; the preview remains full-screen. This is a layout allocation, not a visible panel.
+**The Stable Shutter Rule.** Opening or closing inline filters must keep the manual shutter in the same position and available for capture.
 
-The zoom ruler has a (48dp) touch width around a (40dp) translucent rounded panel. Height is `max(120dp, min(204dp, safe viewport height − 100dp))`. It sits near the right edge, (8dp) clear of the right inset; in landscape it moves left of the action layout area. Its vertical position is centered then clamped between the top controls plus (8dp) and bottom controls minus (12dp), using available viewport space. It adds no full-width panel.
+Filters replace the zoom row with a (148dp) inline region: (92dp) preview strip plus (56dp) strength ruler. The strip sits (16dp) above the action row; the Photo/Filters row moves above the strip. Portrait strip width is capped at (520dp). Cards scroll horizontally with (20dp) side padding and (12dp) gaps.
 
-The filter sheet uses padding (24dp) horizontally, (20dp) at top and (24dp) at bottom. Presets scroll horizontally. Settings use a native scrolling dialog with (24dp) side padding, (8dp) top and (16dp) bottom; labels are separated by native local padding. There is no web breakpoint system.
+Landscape is width greater than height. A right-hand action layout area uses the smaller of (248dp) or 40% of viewport width. Filters occupy the remaining preview-side area, capped at (440dp), and the zoom gesture ruler is hidden while landscape filters are open. Tablet controls retain their physical dp sizes rather than scaling with the screen.
+
+The zoom ruler has a (48dp) hit width around a (40dp) visual panel. Its measured height is `max(112dp, min(168dp, safe viewport height − 130dp))`. It sits (4dp) clear of the right inset, or left of the landscape action area, with vertical positioning clamped below top options and above lower controls. No opaque full-width panel frames the preview.
 
 ## Elevation & Depth
 
-Custom camera controls are flat: button state animators are removed and the shutter has zero elevation. Color and rounded silhouettes establish separation; the live image receives no decorative blur or global chrome scrim. Filter-sheet presentation uses a native dialog dim amount of 0.2. Settings retain native dialog elevation and field affordances rather than custom shadow tokens.
+Custom controls are flat, without button elevation animators. A top fade extends to `min(18% of height, 136dp)` from edge black to transparent. The bottom fade extends over `min(46% of height, 380dp)`, progressing transparent → middle black at 40% → edge black. This is functional contrast behind controls, not decorative surface material.
 
-Camera status text carries a black shadow (3dp radius, 1dp downward offset). Guidance is outlined by a darker path under the mint stroke so it remains legible on changing scenes. These are contrast aids, not a general card-shadow vocabulary.
+Text buttons use a black legibility shadow (2dp radius, 1dp downward offset). Status has its own small backing; options and the zoom ruler have local dark fills. Thin guides and the bold arrow retain dark contrast under-strokes from their drawing implementation. Native provider dialogs retain platform depth and focus affordances.
 
-**The Quiet Depth Rule.** Use tonal separation and native ripple feedback for controls; reserve dark strokes and text shadow for legibility over live imagery.
+**The Edge Contrast Rule.** Support bare white controls with local top/bottom black fades and small backings; preserve the center of the live image without an opaque scrim.
 
 ## Shapes
 
-Controls use the gently rounded `control` radius; compact camera messages use `message`; the filter sheet uses `sheet`. No general card component is implemented. The shutter is circular, drawn as a thin outer ring and solid central disk. Icons are custom stroked geometric drawables at (24dp), with rounded joins and caps. The composition ring has a (20dp) radius; the search arc uses (24dp). Focus uses a (40dp) outlined square with (6dp) corners.
+Bare icons are custom paths on a 24-unit drawable grid with (1.7-unit) rounded strokes. The inset chevron pill uses its own rounded shape inside the larger hit target. Radius roles apply narrowly: filter previews, recent-photo clipping, status, expanded options, chevron and zoom ruler. The (24dp) ripple-mask radius does not imply a visible button tile.
+
+The shutter uses an outer circle of radius 10 and a filled inner circle of radius 8.8 on the 24-unit drawable grid; the outer stroke is 0.65 units. It fills an (80dp) icon view with zero padding. The reference grid uses fractions 0.382 and 0.618, (0.6dp) lines, (1dp) corner marks of length (20dp), and an inactive-composition red center cross with (11dp) arms.
 
 ## Components
 
-### Camera controls
+### Bare controls and navigation
 
-Compact, locally backed native buttons. Flash, quality, settings and zoom preserve at least (48dp) bounds. Text buttons use the camera caption role and (4dp) padding; settings use a drawn icon with (12dp) padding. Zoom selection changes both backing and text to the camera selected/mint pair. Composition selection changes its backing and label to “结束”; it does not reuse zoom's mint text change. Disabled and saving controls use alpha 0.45. Native ripples and tap haptics provide feedback; no custom hover design exists on Android.
+Flash, filter and settings remain white at rest. Active flash turns red. The chevron is a (36dp × 28dp) visible charcoal pill inside a (48dp) target, created with (6dp) horizontal and (10dp) vertical insets; it switches up/down with options visibility. Ordinary native camera ripples use translucent white at alpha 51/255 over transparent fill. Disabled/saving controls use alpha 0.45. Buttons provide native tap haptics.
 
-### Zoom gesture ruler
+Zoom stops are 1×, 1.5×, 2× and 3× software magnifications, selected in red with no filled chip. Photo and Filters are task tabs, not additional capture modes. AI sits to the shutter's right; its active label becomes red “结束”. The left recent-photo view displays this app's actual last saved image, inset (6dp), clipped with the thumbnail radius; a drawn gallery icon is the initial empty state.
 
-A narrow native range control makes continuous zoom visible and operable. The current zoom uses `zoom-readout`; plus/minus are drawn (1.5dp) strokes, not text glyphs. The log-spaced rail marks 1×, 2×, 4× and 8× when those stops are inside the supported range. The idle rail is (2dp) with a (4.5dp) mint thumb; touch or automatic zoom uses a (3dp) active fill and (6dp) thumb. The thumb retains a small charcoal center (1.5dp). The panel uses the existing camera backing and the `zoom-ruler` radius.
+### Inline filters
 
-Dragging is relative to the current log-zoom fraction, so touching the ruler does not jump to an absolute value. Up enlarges, down reduces; plus/minus taps multiply or divide by 1.15. Native SeekBar range semantics expose the current zoom, set-progress, and forward/back actions multiplying or dividing by 1.1. Gesture takeover interrupts automatic composition. The 48dp hit region remains distinct from the narrower visible panel.
+Five existing presets remain: 原片、柔和、暖调、冷调、黑白. Each (76dp × 92dp) card draws a center-cropped bitmap from actual camera preview pixels, with the preset's full-strength color matrix. The image region starts (3dp) inside the card and ends at (67dp) vertically; the label baseline is (86dp). Selection adds a (2dp) white border, without a colored fill. Before pixels arrive the image region uses the empty-preview color. Keyboard focus draws a separate red (2dp) outline around the whole card with (4dp) corners; a selected card keeps its white preview border at the same time. Focus changes invalidate the card drawing.
 
-### Zoom motion
+The strength ruler covers 0–100. Ticks are spaced in 2-point steps; major ticks every 10 points are (14dp) long, minor ticks (9dp), each (1dp) wide. A fixed central red marker is (24dp) long and (2dp) wide; a white number sits above it. Dragging moves the ticks relative to this center; native range accessibility supports set-progress and ±5-point actions. Keyboard focus adds a red (1.5dp) outline with (6dp) corners, inset (2dp) horizontally and (1dp) vertically. Left/Right change strength by 2 percentage points; Home/End set 0/100. Up/Down remain available for native focus navigation. Focus changes invalidate the range drawing. Original disables strength at alpha 0.45. Filter selection updates immediately. Photo or Android Back closes the inline strip without moving the shutter. Reveal fades in over (160ms) when system animators are enabled; otherwise it appears directly.
 
-Confirmed framing proceeds as one continuous trajectory in log zoom. Its quintic ease is `s(t) = 10t³ − 15t⁴ + 6t⁵`, with duration in seconds `max(0.5, 1.05 × abs(ln(goal/start)))`. Endpoints settle without an overshoot. This automatic trajectory immediately applies its target when Android system animations are disabled. Direct gestures use an exponential response coefficient of (70/s); preset-button transitions use the critically damped response coefficient (14/s). These separate motion modes preserve direct touch response while making automatic framing visibly gradual.
+### Zoom gesture ruler and motion
 
-Automatic enlargement freezes on tracking loss or misalignment and can resume after alignment; user gestures take control immediately. Subject and crop geometry are remapped for display zoom between tracking samples, keeping the arrow and outline attached to their intended image positions. Free-crop proportions remain intact throughout enlargement.
+The vertical zoom indicator uses white readout, translucent white log ticks at 1/2/4/8 within range, and red progress/thumb. Plus/minus are drawn (1.5dp) strokes. Idle fill/thumb are (2dp)/(4.5dp radius); active touch or automatic movement uses (3dp)/(6dp). A charcoal center is (1.5dp). Active panel backing is stronger than idle.
 
-### Shutter
+Dragging is relative to current log zoom, preventing a jump at touch-down. Up enlarges; plus/minus taps multiply/divide by 1.15. Native SeekBar semantics expose set-progress and forward/back multiplying/dividing by 1.1. Manual gestures interrupt composition. Keyboard Up/Down multiply/divide zoom by 1.1; plus or equals aliases Up, minus aliases Down. Home/End set minimum/maximum. A focused ruler draws a red (2dp) outline on the existing panel boundary, keeping its (20dp) corners. Focus changes invalidate its drawing; focus alone does not enlarge the thumb or strengthen the panel fill.
 
-A familiar white ring and disk inside an (80dp) hit view, with (10dp) image padding. It remains independent of AI progress. Drawing fits the custom 24-unit icon geometry into the image bounds; the view itself has transparent background.
+Automatic framing retains one continuous log-zoom trajectory with `s(t)=10t³−15t⁴+6t⁵`, duration in seconds `max(0.5, 1.05×abs(ln(goal/start)))`. It immediately applies the target when system animations are disabled. Gesture response is exponential (70/s); preset motion is critically damped (14/s). Automatic enlargement freezes on tracking loss/misalignment and yields to touch. Drawn subject/crop geometry compensates for zoom between tracking samples; free-crop proportions remain intact.
 
-### Status and caption
+### Composition, crop and reference guides
 
-Supporting labels use a compact charcoal backing with the message radius. Status allows two ellipsized lines, uses a polite accessibility live region and disappears when empty. Caption uses one ellipsized line and a (24dp) height. They expand only around their content. Automatic discovery contributes one short subject label and reason to the existing status area; it does not add a scoring screen. Artistic interest, story, visual geometry and clarity are subjective selection signals, not objective photo-quality grades. The caption adds “自由裁切” when either retained photo dimension is below 0.999 of the viewfinder.
+The straight phone-movement arrow has rounded (8dp) shaft/head strokes at alpha 185/255, (14dp) axial head length, and an (11dp) dark shaft under-stroke at alpha 45/255. It is white while guiding and red when ready. The target ring retains a (20dp) radius, (1.8dp) foreground and (4dp) dark under-stroke; the central aim point is white. Search rotates two local 70° arcs over (1800ms), with a static fallback when animations are disabled. Focus lasts (550ms), capture feedback (100ms), and ordinary transient feedback defaults to (3000ms).
 
-### Filter sheet and presets
+Free crops have independent width and height. The outline is white (1dp) over a dark (3dp) under-stroke; corner marks are (2dp), at most (12dp) long or one quarter of the shorter frame dimension. No outside crop scrim is added. Completed crop outlines remain after guidance ends and represent the matching centered, rotation-aware saved region. The former persistent filter/zoom caption is absent; selection is communicated through controls and the strength ruler.
 
-A rounded native bottom dialog. Preset buttons are (76dp × 52dp), use the label role, and change raised fill to soft selection fill without changing text color. The intensity SeekBar is native, (48dp) tall, and disabled for the original preset. The full-width completion button uses the body role and selected fill. Selection applies immediately; completion dismisses the sheet.
+### Status and settings
 
-### Settings and fields
-
-Native Material AlertDialog, ScrollView, Spinner, EditText and CheckBox. Fields are single-line and retain native focus/underline feedback; API Key uses password input. The custom explanatory note uses the caption role. No additional input radius, border or card token is established by this implementation.
-
-### Composition guidance
-
-A small central aim mark, target ring and straight, thick, slightly transparent arrow communicate phone movement. The shaft and chevron use rounded (8dp) strokes at alpha (185/255); the head extends (14dp) along the movement direction. The shaft has a dark green contrast under-stroke (11dp) at alpha (45/255). Its path is a direct line, with no bend. The arrow uses camera mint during guidance and the implemented ready mint when aligned. The target ring retains its (1.8dp) stroke over a (4dp) contrast stroke. Search rotates two local (70°) arcs over (1800ms) only when Android animators are enabled; otherwise it draws a static arc. Focus lasts (550ms), capture feedback (100ms), and a transient message normally lasts (3000ms). These observed timings take precedence over provisional surface-brief timing language.
-
-### Free-crop outline
-
-Independent retained width and height support any aspect ratio; there is no fixed-ratio frame family. A thin mint rectangle (1dp) over a dark green contrast stroke (3dp) marks the photo area. Mint corner marks use (2dp) strokes and a length capped at (12dp), reduced to one quarter of the shorter frame dimension for small crops. The image inside and outside the frame stays visible without a scrim.
-
-Active guidance may show its proposed crop frame; otherwise the completed retained crop is centered in the full-screen viewfinder. That completed outline remains after guidance ends. The saved JPEG uses the corresponding centered region with rotation-aware axis mapping, so the visible boundary describes the output rather than a decorative composition overlay.
+Transient white status uses a small rounded backing, two ellipsized lines and a polite accessibility live region; it disappears when empty. Automatic discovery contributes one short subject label/reason, without displaying a score system. Artistic ranking is subjective. Provider settings retain native AlertDialog, ScrollView, Spinner, single-line EditText, password Key input and CheckBox semantics, with neutral day/night forms and red accent; no custom input-card system is established.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** use the camera palette for live-view controls in both system themes.
-- **Do** preserve the familiar shutter silhouette and keep AI composition immediately beside it.
-- **Do** keep interactive camera controls at least 48dp and respect system insets.
-- **Do** use the day/night dialog palette for auxiliary tasks.
-- **Do** retain local search animation and its static fallback when system animation is disabled.
+- **Do** preserve full-screen preview, system insets and at least 48dp interactive targets.
+- **Do** use red for active camera text and white for the selected filter border.
+- **Do** populate filter cards and the recent-photo control with actual camera or saved-image pixels.
+- **Do** keep the shutter fixed when showing filters and close the strip through Photo or Android Back.
+- **Do** honor disabled system animation for filter reveal, local search and automatic framing.
 
 ### Don't:
 
-- **Don't** put the live viewfinder inside a card or add opaque top/bottom control panels.
-- **Don't** replace the manual shutter with an AI-triggered capture action.
-- **Don't** introduce a display face, decorative typography or hardware imitation into this Soft world.
-- **Don't** treat OPPO functional composition inspiration as authorization for a pixel copy.
+- **Don't** bring filled colored tiles or a modal filter sheet into this camera surface.
+- **Don't** copy reference branding, beauty controls, video modes, front-camera switching or unsupported optical focal lengths.
+- **Don't** replace live filter previews with sample photographs.
+- **Don't** present subjective AI ranking as an objective image-quality score.

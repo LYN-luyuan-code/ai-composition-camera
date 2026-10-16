@@ -1,326 +1,299 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-16T14:40:58.467687+00:00",
-  "title": "Design System: 街拍相机 · Soft Android",
+  "generatedAt": "2026-10-16T15:28:08.207485+00:00",
+  "title": "Design System: 街拍相机 · Native Camera",
   "extensions": {
     "colorMeta": {
-      "dialog-accent": {
-        "role": "primary",
-        "displayName": "Dialog Accent",
-        "tonalRamp": [
-          "oklch(15.00% 0.07368 164.36)",
-          "oklch(26.43% 0.07368 164.36)",
-          "oklch(37.86% 0.07368 164.36)",
-          "oklch(49.29% 0.07368 164.36)",
-          "oklch(60.71% 0.07368 164.36)",
-          "oklch(72.14% 0.07368 164.36)",
-          "oklch(83.57% 0.07368 164.36)",
-          "oklch(95.00% 0.07368 164.36)"
-        ]
-      },
-      "dialog-accent-night": {
-        "role": "primary",
-        "displayName": "Dialog Accent Night",
-        "tonalRamp": [
-          "oklch(15.00% 0.05702 161.02)",
-          "oklch(26.43% 0.05702 161.02)",
-          "oklch(37.86% 0.05702 161.02)",
-          "oklch(49.29% 0.05702 161.02)",
-          "oklch(60.71% 0.05702 161.02)",
-          "oklch(72.14% 0.05702 161.02)",
-          "oklch(83.57% 0.05702 161.02)",
-          "oklch(95.00% 0.05702 161.02)"
-        ]
-      },
-      "camera-mint": {
-        "role": "primary",
-        "displayName": "Camera Mint",
-        "tonalRamp": [
-          "oklch(15.00% 0.05210 158.17)",
-          "oklch(26.43% 0.05210 158.17)",
-          "oklch(37.86% 0.05210 158.17)",
-          "oklch(49.29% 0.05210 158.17)",
-          "oklch(60.71% 0.05210 158.17)",
-          "oklch(72.14% 0.05210 158.17)",
-          "oklch(83.57% 0.05210 158.17)",
-          "oklch(95.00% 0.05210 158.17)"
-        ]
-      },
-      "dialog-selected": {
-        "role": "primary",
-        "displayName": "Dialog Selected",
-        "tonalRamp": [
-          "oklch(15.00% 0.02166 154.11)",
-          "oklch(26.43% 0.02166 154.11)",
-          "oklch(37.86% 0.02166 154.11)",
-          "oklch(49.29% 0.02166 154.11)",
-          "oklch(60.71% 0.02166 154.11)",
-          "oklch(72.14% 0.02166 154.11)",
-          "oklch(83.57% 0.02166 154.11)",
-          "oklch(95.00% 0.02166 154.11)"
-        ]
-      },
-      "dialog-selected-night": {
-        "role": "primary",
-        "displayName": "Dialog Selected Night",
-        "tonalRamp": [
-          "oklch(15.00% 0.03818 162.53)",
-          "oklch(26.43% 0.03818 162.53)",
-          "oklch(37.86% 0.03818 162.53)",
-          "oklch(49.29% 0.03818 162.53)",
-          "oklch(60.71% 0.03818 162.53)",
-          "oklch(72.14% 0.03818 162.53)",
-          "oklch(83.57% 0.03818 162.53)",
-          "oklch(95.00% 0.03818 162.53)"
-        ]
-      },
-      "camera-selected": {
-        "role": "primary",
-        "displayName": "Camera Selected",
-        "tonalRamp": [
-          "oklch(15.00% 0.05760 159.85)",
-          "oklch(26.43% 0.05760 159.85)",
-          "oklch(37.86% 0.05760 159.85)",
-          "oklch(49.29% 0.05760 159.85)",
-          "oklch(60.71% 0.05760 159.85)",
-          "oklch(72.14% 0.05760 159.85)",
-          "oklch(83.57% 0.05760 159.85)",
-          "oklch(95.00% 0.05760 159.85)"
-        ]
-      },
-      "dialog-surface": {
+      "camera-black": {
         "role": "neutral",
-        "displayName": "Dialog Surface",
+        "displayName": "Camera Black",
         "tonalRamp": [
-          "oklch(15.00% 0.00508 145.54)",
-          "oklch(26.43% 0.00508 145.54)",
-          "oklch(37.86% 0.00508 145.54)",
-          "oklch(49.29% 0.00508 145.54)",
-          "oklch(60.71% 0.00508 145.54)",
-          "oklch(72.14% 0.00508 145.54)",
-          "oklch(83.57% 0.00508 145.54)",
-          "oklch(95.00% 0.00508 145.54)"
+          "oklch(15% 0.00000 0.00)",
+          "oklch(26.43% 0.00000 0.00)",
+          "oklch(37.86% 0.00000 0.00)",
+          "oklch(49.29% 0.00000 0.00)",
+          "oklch(60.71% 0.00000 0.00)",
+          "oklch(72.14% 0.00000 0.00)",
+          "oklch(83.57% 0.00000 0.00)",
+          "oklch(95% 0.00000 0.00)"
         ]
       },
-      "dialog-surface-night": {
+      "camera-white": {
         "role": "neutral",
-        "displayName": "Dialog Surface Night",
+        "displayName": "Camera White",
         "tonalRamp": [
-          "oklch(15.00% 0.00937 173.50)",
-          "oklch(26.43% 0.00937 173.50)",
-          "oklch(37.86% 0.00937 173.50)",
-          "oklch(49.29% 0.00937 173.50)",
-          "oklch(60.71% 0.00937 173.50)",
-          "oklch(72.14% 0.00937 173.50)",
-          "oklch(83.57% 0.00937 173.50)",
-          "oklch(95.00% 0.00937 173.50)"
-        ]
-      },
-      "dialog-raised": {
-        "role": "neutral",
-        "displayName": "Dialog Raised",
-        "tonalRamp": [
-          "oklch(15.00% 0.00282 128.49)",
-          "oklch(26.43% 0.00282 128.49)",
-          "oklch(37.86% 0.00282 128.49)",
-          "oklch(49.29% 0.00282 128.49)",
-          "oklch(60.71% 0.00282 128.49)",
-          "oklch(72.14% 0.00282 128.49)",
-          "oklch(83.57% 0.00282 128.49)",
-          "oklch(95.00% 0.00282 128.49)"
-        ]
-      },
-      "dialog-raised-night": {
-        "role": "neutral",
-        "displayName": "Dialog Raised Night",
-        "tonalRamp": [
-          "oklch(15.00% 0.01202 170.99)",
-          "oklch(26.43% 0.01202 170.99)",
-          "oklch(37.86% 0.01202 170.99)",
-          "oklch(49.29% 0.01202 170.99)",
-          "oklch(60.71% 0.01202 170.99)",
-          "oklch(72.14% 0.01202 170.99)",
-          "oklch(83.57% 0.01202 170.99)",
-          "oklch(95.00% 0.01202 170.99)"
-        ]
-      },
-      "dialog-ink": {
-        "role": "neutral",
-        "displayName": "Dialog Ink",
-        "tonalRamp": [
-          "oklch(15.00% 0.03690 164.73)",
-          "oklch(26.43% 0.03690 164.73)",
-          "oklch(37.86% 0.03690 164.73)",
-          "oklch(49.29% 0.03690 164.73)",
-          "oklch(60.71% 0.03690 164.73)",
-          "oklch(72.14% 0.03690 164.73)",
-          "oklch(83.57% 0.03690 164.73)",
-          "oklch(95.00% 0.03690 164.73)"
-        ]
-      },
-      "dialog-ink-night": {
-        "role": "neutral",
-        "displayName": "Dialog Ink Night",
-        "tonalRamp": [
-          "oklch(15.00% 0.00580 153.77)",
-          "oklch(26.43% 0.00580 153.77)",
-          "oklch(37.86% 0.00580 153.77)",
-          "oklch(49.29% 0.00580 153.77)",
-          "oklch(60.71% 0.00580 153.77)",
-          "oklch(72.14% 0.00580 153.77)",
-          "oklch(83.57% 0.00580 153.77)",
-          "oklch(95.00% 0.00580 153.77)"
-        ]
-      },
-      "dialog-muted": {
-        "role": "neutral",
-        "displayName": "Dialog Muted",
-        "tonalRamp": [
-          "oklch(15.00% 0.03429 160.10)",
-          "oklch(26.43% 0.03429 160.10)",
-          "oklch(37.86% 0.03429 160.10)",
-          "oklch(49.29% 0.03429 160.10)",
-          "oklch(60.71% 0.03429 160.10)",
-          "oklch(72.14% 0.03429 160.10)",
-          "oklch(83.57% 0.03429 160.10)",
-          "oklch(95.00% 0.03429 160.10)"
-        ]
-      },
-      "dialog-muted-night": {
-        "role": "neutral",
-        "displayName": "Dialog Muted Night",
-        "tonalRamp": [
-          "oklch(15.00% 0.01719 162.65)",
-          "oklch(26.43% 0.01719 162.65)",
-          "oklch(37.86% 0.01719 162.65)",
-          "oklch(49.29% 0.01719 162.65)",
-          "oklch(60.71% 0.01719 162.65)",
-          "oklch(72.14% 0.01719 162.65)",
-          "oklch(83.57% 0.01719 162.65)",
-          "oklch(95.00% 0.01719 162.65)"
-        ]
-      },
-      "camera-backing": {
-        "role": "neutral",
-        "displayName": "Camera Backing",
-        "tonalRamp": [
-          "oklch(15.00% 0.00812 169.70)",
-          "oklch(26.43% 0.00812 169.70)",
-          "oklch(37.86% 0.00812 169.70)",
-          "oklch(49.29% 0.00812 169.70)",
-          "oklch(60.71% 0.00812 169.70)",
-          "oklch(72.14% 0.00812 169.70)",
-          "oklch(83.57% 0.00812 169.70)",
-          "oklch(95.00% 0.00812 169.70)"
-        ]
-      },
-      "camera-ink": {
-        "role": "neutral",
-        "displayName": "Camera Ink",
-        "tonalRamp": [
-          "oklch(15.00% 0.00000 89.88)",
+          "oklch(15% 0.00000 89.88)",
           "oklch(26.43% 0.00000 89.88)",
           "oklch(37.86% 0.00000 89.88)",
           "oklch(49.29% 0.00000 89.88)",
           "oklch(60.71% 0.00000 89.88)",
           "oklch(72.14% 0.00000 89.88)",
           "oklch(83.57% 0.00000 89.88)",
-          "oklch(95.00% 0.00000 89.88)"
+          "oklch(95% 0.00000 89.88)"
         ]
       },
-      "camera-muted": {
-        "role": "neutral",
-        "displayName": "Camera Muted",
+      "camera-red": {
+        "role": "primary",
+        "displayName": "Camera Red",
         "tonalRamp": [
-          "oklch(15.00% 0.00668 160.07)",
-          "oklch(26.43% 0.00668 160.07)",
-          "oklch(37.86% 0.00668 160.07)",
-          "oklch(49.29% 0.00668 160.07)",
-          "oklch(60.71% 0.00668 160.07)",
-          "oklch(72.14% 0.00668 160.07)",
-          "oklch(83.57% 0.00668 160.07)",
-          "oklch(95.00% 0.00668 160.07)"
+          "oklch(15% 0.23087 26.40)",
+          "oklch(26.43% 0.23087 26.40)",
+          "oklch(37.86% 0.23087 26.40)",
+          "oklch(49.29% 0.23087 26.40)",
+          "oklch(60.71% 0.23087 26.40)",
+          "oklch(72.14% 0.23087 26.40)",
+          "oklch(83.57% 0.23087 26.40)",
+          "oklch(95% 0.23087 26.40)"
         ]
       },
-      "camera-rail": {
+      "control-charcoal": {
         "role": "neutral",
-        "displayName": "Translucent White Rail",
+        "displayName": "Control Charcoal",
         "tonalRamp": [
-          "oklch(15% 0 0)",
-          "oklch(26.43% 0 0)",
-          "oklch(37.86% 0 0)",
-          "oklch(49.29% 0 0)",
-          "oklch(60.71% 0 0)",
-          "oklch(72.14% 0 0)",
-          "oklch(83.57% 0 0)",
-          "oklch(95% 0 0)"
+          "oklch(15% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95% 0.00000 89.88)"
+        ]
+      },
+      "rail-white": {
+        "role": "neutral",
+        "displayName": "Rail White",
+        "tonalRamp": [
+          "oklch(15% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95% 0.00000 89.88)"
+        ]
+      },
+      "grid-white": {
+        "role": "neutral",
+        "displayName": "Grid White",
+        "tonalRamp": [
+          "oklch(15% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95% 0.00000 89.88)"
+        ]
+      },
+      "ruler-gray": {
+        "role": "neutral",
+        "displayName": "Ruler Gray",
+        "tonalRamp": [
+          "oklch(15% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95% 0.00000 89.88)"
+        ]
+      },
+      "preview-empty": {
+        "role": "neutral",
+        "displayName": "Preview Empty",
+        "tonalRamp": [
+          "oklch(15% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95% 0.00000 89.88)"
+        ]
+      },
+      "status-black": {
+        "role": "neutral",
+        "displayName": "Status Black",
+        "tonalRamp": [
+          "oklch(15% 0.00000 0.00)",
+          "oklch(26.43% 0.00000 0.00)",
+          "oklch(37.86% 0.00000 0.00)",
+          "oklch(49.29% 0.00000 0.00)",
+          "oklch(60.71% 0.00000 0.00)",
+          "oklch(72.14% 0.00000 0.00)",
+          "oklch(83.57% 0.00000 0.00)",
+          "oklch(95% 0.00000 0.00)"
+        ]
+      },
+      "options-charcoal": {
+        "role": "neutral",
+        "displayName": "Options Charcoal",
+        "tonalRamp": [
+          "oklch(15% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95% 0.00000 89.88)"
+        ]
+      },
+      "zoom-idle-black": {
+        "role": "neutral",
+        "displayName": "Zoom Idle Black",
+        "tonalRamp": [
+          "oklch(15% 0.00000 0.00)",
+          "oklch(26.43% 0.00000 0.00)",
+          "oklch(37.86% 0.00000 0.00)",
+          "oklch(49.29% 0.00000 0.00)",
+          "oklch(60.71% 0.00000 0.00)",
+          "oklch(72.14% 0.00000 0.00)",
+          "oklch(83.57% 0.00000 0.00)",
+          "oklch(95% 0.00000 0.00)"
+        ]
+      },
+      "zoom-active-black": {
+        "role": "neutral",
+        "displayName": "Zoom Active Black",
+        "tonalRamp": [
+          "oklch(15% 0.00000 0.00)",
+          "oklch(26.43% 0.00000 0.00)",
+          "oklch(37.86% 0.00000 0.00)",
+          "oklch(49.29% 0.00000 0.00)",
+          "oklch(60.71% 0.00000 0.00)",
+          "oklch(72.14% 0.00000 0.00)",
+          "oklch(83.57% 0.00000 0.00)",
+          "oklch(95% 0.00000 0.00)"
+        ]
+      },
+      "edge-black": {
+        "role": "neutral",
+        "displayName": "Edge Black",
+        "tonalRamp": [
+          "oklch(15% 0.00000 0.00)",
+          "oklch(26.43% 0.00000 0.00)",
+          "oklch(37.86% 0.00000 0.00)",
+          "oklch(49.29% 0.00000 0.00)",
+          "oklch(60.71% 0.00000 0.00)",
+          "oklch(72.14% 0.00000 0.00)",
+          "oklch(83.57% 0.00000 0.00)",
+          "oklch(95% 0.00000 0.00)"
+        ]
+      },
+      "fade-middle-black": {
+        "role": "neutral",
+        "displayName": "Fade Middle Black",
+        "tonalRamp": [
+          "oklch(15% 0.00000 0.00)",
+          "oklch(26.43% 0.00000 0.00)",
+          "oklch(37.86% 0.00000 0.00)",
+          "oklch(49.29% 0.00000 0.00)",
+          "oklch(60.71% 0.00000 0.00)",
+          "oklch(72.14% 0.00000 0.00)",
+          "oklch(83.57% 0.00000 0.00)",
+          "oklch(95% 0.00000 0.00)"
+        ]
+      },
+      "dialog-red": {
+        "role": "primary",
+        "displayName": "Dialog Red",
+        "tonalRamp": [
+          "oklch(15% 0.19373 26.72)",
+          "oklch(26.43% 0.19373 26.72)",
+          "oklch(37.86% 0.19373 26.72)",
+          "oklch(49.29% 0.19373 26.72)",
+          "oklch(60.71% 0.19373 26.72)",
+          "oklch(72.14% 0.19373 26.72)",
+          "oklch(83.57% 0.19373 26.72)",
+          "oklch(95% 0.19373 26.72)"
+        ]
+      },
+      "dialog-red-night": {
+        "role": "primary",
+        "displayName": "Dialog Red Night",
+        "tonalRamp": [
+          "oklch(15% 0.18122 22.84)",
+          "oklch(26.43% 0.18122 22.84)",
+          "oklch(37.86% 0.18122 22.84)",
+          "oklch(49.29% 0.18122 22.84)",
+          "oklch(60.71% 0.18122 22.84)",
+          "oklch(72.14% 0.18122 22.84)",
+          "oklch(83.57% 0.18122 22.84)",
+          "oklch(95% 0.18122 22.84)"
         ]
       }
     },
     "typographyMeta": {
-      "title": {
-        "displayName": "Title",
-        "purpose": "Filter heading."
+      "navigation": {
+        "displayName": "Navigation",
+        "purpose": "Zoom stops and Photo/Filters tasks."
       },
-      "body": {
-        "displayName": "Body",
-        "purpose": "Intensity and completion."
+      "strength": {
+        "displayName": "Strength",
+        "purpose": "Filter strength percentage."
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Preset and transient status."
+        "purpose": "Filter names, options and transient status."
       },
-      "caption": {
-        "displayName": "Caption",
-        "purpose": "Compact camera controls and supporting copy."
-      },
-      "zoom-readout": {
-        "displayName": "Zoom Readout",
-        "purpose": "Current zoom on the native right-edge gesture ruler."
+      "compact": {
+        "displayName": "Compact",
+        "purpose": "Zoom ruler readout and AI caption."
       }
     },
     "shadows": [
       {
-        "name": "status-legibility",
-        "value": "Android TextView.setShadowLayer: radius 3dp, dx 0dp, dy 1dp, black",
-        "purpose": "Local status-text contrast over live imagery."
+        "name": "camera-text-legibility",
+        "value": "Android TextView shadow radius 2dp, dx 0dp, dy 1dp, black",
+        "purpose": "White bare button labels over camera imagery."
       }
     ],
     "motion": [
       {
+        "name": "inline-filter-reveal",
+        "value": "160ms alpha 0→1 with native ViewPropertyAnimator; direct appearance when system animations are disabled.",
+        "purpose": "Show inline controls without moving the shutter."
+      },
+      {
         "name": "search-cycle",
-        "value": "1800ms linear angle derived from uptime; disabled animation draws a static arc",
-        "purpose": "Local composition search."
+        "value": "1800ms linear uptime rotation, two 70° arcs; static fallback when animators disabled.",
+        "purpose": "Local non-obscuring search."
+      },
+      {
+        "name": "automatic-framing",
+        "value": "Log zoom; s(t)=10t^3-15t^4+6t^5; max(0.5,1.05*abs(ln(goal/start))) seconds.",
+        "purpose": "Continuous interruptible framing; direct target when animations disabled; freeze on lost tracking/misalignment."
+      },
+      {
+        "name": "gesture-zoom-response",
+        "value": "Exponential response 70/s in log zoom.",
+        "purpose": "Direct touch smoothing."
+      },
+      {
+        "name": "preset-zoom-response",
+        "value": "Critically damped response 14/s in log zoom.",
+        "purpose": "Settled preset movement."
       },
       {
         "name": "focus-retention",
         "value": "550ms",
-        "purpose": "Tap focus outline."
+        "purpose": "Tap focus indicator."
       },
       {
         "name": "capture-feedback",
         "value": "100ms",
-        "purpose": "Brief viewfinder capture flash."
+        "purpose": "Brief capture flash."
       },
       {
         "name": "transient-status",
         "value": "3000ms default",
-        "purpose": "Short camera feedback."
-      },
-      {
-        "name": "automatic-framing",
-        "value": "Log zoom interpolation; s(t)=10t^3-15t^4+6t^5; duration max(0.5,1.05*abs(ln(goal/start))) seconds.",
-        "purpose": "One continuous, interruptible framing move; freezes on tracking loss/misalignment; immediate target when system animations are disabled."
-      },
-      {
-        "name": "gesture-zoom-response",
-        "value": "Exponential response coefficient 70/s in log zoom.",
-        "purpose": "Smooth small touch steps while preserving direct control."
-      },
-      {
-        "name": "preset-zoom-response",
-        "value": "Critically damped response coefficient 14/s in log zoom.",
-        "purpose": "Gradual preset-button zoom without overshoot."
+        "purpose": "Short feedback."
       }
     ],
     "breakpoints": [
@@ -331,176 +304,211 @@
     ],
     "native": {
       "platform": "Android Views",
-      "dimensionUnits": "dp and sp; sidecar samples use 1 CSS px per native unit for visual inspection only",
+      "dimensionUnits": "dp/sp; specimens map one unit to one CSS px for visual inspection.",
       "sources": [
-        "app/src/main/java/com/luyuan/silkzoom/SoftTheme.kt",
         "app/src/main/java/com/luyuan/silkzoom/CameraOverlayView.kt",
-        "app/src/main/java/com/luyuan/silkzoom/FilterSheet.kt",
-        "app/src/main/java/com/luyuan/silkzoom/AiSettingsDialog.kt",
-        "app/src/main/res/values/themes.xml",
-        "app/src/main/res/values-night/themes.xml",
-        "app/src/main/java/com/luyuan/silkzoom/MainActivity.kt",
-        "app/src/main/java/com/luyuan/silkzoom/PhotoSaver.kt",
+        "app/src/main/java/com/luyuan/silkzoom/CameraFilterStrip.kt",
         "app/src/main/java/com/luyuan/silkzoom/ZoomGestureBar.kt",
+        "app/src/main/java/com/luyuan/silkzoom/SoftTheme.kt",
         "app/src/main/java/com/luyuan/silkzoom/ZoomMotion.kt",
-        "app/src/main/java/com/luyuan/silkzoom/SmoothZoomController.kt"
+        "app/src/main/java/com/luyuan/silkzoom/SmoothZoomController.kt",
+        "app/src/main/java/com/luyuan/silkzoom/AiSettingsDialog.kt",
+        "app/src/main/java/com/luyuan/silkzoom/StreetFilter.kt",
+        "app/src/main/res/values/themes.xml",
+        "app/src/main/res/values-night/themes.xml"
       ],
-      "previewStates": "Native uses RippleDrawable and platform focus semantics; CSS focus rings are preview-only keyboard affordances.",
-      "tonalRamps": "Synthesized OKLCH inspection ramps; not additional application tokens.",
-      "dialogDimAmount": 0.2,
+      "authority": "User-pinned camera-photo.jpg and camera-filters.jpg under .impeccable/references; current source resolves implementation facts.",
+      "previewStates": "Specimens are static source-derived examples. Filter-card and ruler focus geometry mirrors current native source; other CSS focus affordances support browser inspection. Android owns the documented keyboard actions.",
+      "tonalRamps": "Synthesized OKLCH inspection aids; not shipped tokens.",
       "cameraDisabledAlpha": 0.45,
-      "freeCrop": {
-        "aspectRatio": "Independent retained width and height; no fixed ratio constraints.",
-        "outline": "1dp camera-mint over 3dp dark contrast stroke, Android Color.argb(100, 8, 27, 19).",
-        "cornerMarks": "2dp camera-mint; length min(12dp, shorter frame dimension / 4).",
-        "visibility": "Active proposed frame or centered retained crop; completed retained outline persists after guidance ends. No outside scrim.",
-        "caption": "自由裁切 when either retained dimension < 0.999.",
-        "output": "Centered saved region with rotation-aware width/height mapping."
+      "contrastFades": {
+        "top": "min(18% viewport height,136dp), edge-black to transparent.",
+        "bottom": "min(46% viewport height,380dp), transparent at 0, fade-middle-black at .4, edge-black at 1."
       },
-      "compositionArrow": {
-        "geometry": "Straight shaft using Path.lineTo; rounded stroke caps.",
-        "shaftAndChevron": "8dp stroke, 185/255 alpha.",
-        "head": "14dp axial length, perpendicular spread 0.6 times that length.",
-        "shaftUnderStroke": "11dp, Android Color.argb(45, 8, 27, 19).",
-        "color": "Existing camera-mint; Android Color.rgb(166, 228, 189) when ready.",
-        "meaning": "Arrow indicates phone movement, rather than subject movement."
+      "inlineFilters": {
+        "presets": [
+          "原片",
+          "柔和",
+          "暖调",
+          "冷调",
+          "黑白"
+        ],
+        "pixels": "Actual camera preview with full-strength preset matrix; no reference screenshot or stock photo assets.",
+        "selection": "2dp white border; no colored fill.",
+        "strength": "0–100 native range; 2-point ticks, 10-point majors, ±5 accessibility actions.",
+        "close": "Photo or Android Back; shutter position preserved.",
+        "landscape": "Zoom gesture ruler hidden while strip is visible.",
+        "keyboardFocus": {
+          "card": "2dp red outer card outline,4dp corners; white selected preview border remains.",
+          "strength": "1.5dp red outline,6dp corners; inset2dp horizontally,1dp vertically.",
+          "keys": "Left -2 percentage points; Right +2; Home0; End100. Up/Down delegate to native focus navigation.",
+          "redraw": "Card and strength range invalidate on focus changes."
+        }
       },
       "zoomRuler": {
         "touchWidth": "48dp",
         "panelWidth": "40dp",
-        "panelRadius": "20dp",
-        "height": "max(120dp, min(204dp, safe viewport height - 100dp))",
-        "track": "Log-spaced 1/2/4/8 ticks within supported range; rail starts at 45dp and ends 30dp above bottom.",
-        "state": "Mint active fill 3dp / thumb radius 6dp; idle 2dp / 4.5dp.",
-        "input": "Relative log-fraction drag; plus/minus multiply/divide 1.15; accessibility multiply/divide 1.1 or set-progress.",
-        "semantics": "Native SeekBar range and state description.",
-        "specimen": "Static 2× visual example with press/focus state; native Android source owns actual range interaction."
+        "height": "max(112dp,min(168dp,safe height - 130dp))",
+        "range": "Log ticks 1/2/4/8 within supported range.",
+        "state": "Idle fill 2dp/thumb4.5dp; active3dp/thumb6dp; red foreground.",
+        "actions": "Relative drag, tap multiply/divide1.15, accessibility multiply/divide1.1 or set-progress.",
+        "keyboardFocus": {
+          "outline": "2dp red on existing panel boundary,20dp corners.",
+          "keys": "Up/plus/equals multiply1.1; Down/minus divide1.1; Home minimum; End maximum.",
+          "redraw": "Invalidate on focus changes. Focus alone leaves idle fill/thumb sizes unchanged."
+        }
       },
-      "artisticDiscoveryPresentation": "One short subject label and reason in existing status text. Ranking combines subjective artistic/story/geometric/clarity estimates; it is not an objective quality grade or a visible score system."
+      "compositionArrow": {
+        "geometry": "Straight, rounded8dp shaft/head, alpha185/255; head14dp axial length.",
+        "underStroke": "11dp shaft, Android Color.argb(45,8,27,19).",
+        "state": "White guidance; camera-red when ready.",
+        "meaning": "Phone movement."
+      },
+      "freeCrop": {
+        "aspect": "Independent retained width/height, arbitrary ratio.",
+        "stroke": "White1dp over dark3dp; white2dp corners up to12dp or shorter dimension/4.",
+        "persistence": "Completed retained crop stays visible after guidance ends; output centered with rotation-aware axes.",
+        "scrim": "None."
+      },
+      "referenceGrid": {
+        "fractions": [
+          0.382,
+          0.618
+        ],
+        "line": "0.6dp translucent white",
+        "corners": "1dp stroke,20dp arms",
+        "cross": "1dp red,11dp arms; visible when composition is inactive."
+      },
+      "artisticDiscoveryPresentation": "One short subject label/reason in existing status; subjective selection signals, not objective quality grades."
     }
   },
   "components": [
     {
-      "name": "Camera control",
+      "name": "Bare flash",
       "kind": "button",
-      "refersTo": "camera-control",
-      "description": "Native compact camera button; web focus is an inspection affordance.",
-      "html": "<button class=\"ds-control\">标准</button>",
-      "css": ".ds-control{font:12px sans-serif;color:#fff;background:#202523B3;border:0;border-radius:16px;padding:4px;min-width:48px;height:48px;cursor:pointer}.ds-control:hover{filter:none}.ds-control:focus-visible{outline:2px solid #C3EAD2;outline-offset:2px}.ds-control:active{box-shadow:inset 0 0 0 100px #C3EAD223}.ds-control:disabled{opacity:.45}"
+      "description": "White geometric icon; transparent rest state, 48dp native hit target.",
+      "html": "<button class=\"ds-icon\" aria-label=\"闪光灯关\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"white\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 2L5 13H11L10 22L19 10H13Z M3 3L21 21\"/></svg></button>",
+      "css": ".ds-icon{width:48px;height:48px;padding:12px;border:0;border-radius:24px;background:transparent;cursor:pointer}.ds-icon:hover{background:transparent}.ds-icon:focus-visible{outline:2px solid #FF3B3B;outline-offset:2px}.ds-icon:active{background:#FFFFFF33}.ds-icon:disabled{opacity:.45}",
+      "refersTo": "bare-icon"
     },
     {
-      "name": "Selected zoom",
-      "kind": "chip",
-      "refersTo": "camera-zoom-selected",
-      "description": "Selected 1× zoom stop.",
-      "html": "<button class=\"ds-control ds-selected\">1×</button>",
-      "css": ".ds-control{font:12px sans-serif;color:#fff;background:#202523B3;border:0;border-radius:16px;padding:4px;min-width:48px;height:48px;cursor:pointer}.ds-selected{width:48px;color:#C3EAD2;background:#345C47EE}.ds-control:hover{filter:none}.ds-control:focus-visible{outline:2px solid #C3EAD2;outline-offset:2px}.ds-control:active{box-shadow:inset 0 0 0 100px #C3EAD223}.ds-control:disabled{opacity:.45}"
+      "name": "Options chevron",
+      "kind": "button",
+      "description": "Visible 36×28 pill within 48×48 target.",
+      "html": "<button class=\"ds-chevron\" aria-label=\"展开相机选项\"><span><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"white\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 9L12 15L18 9\"/></svg></span></button>",
+      "css": ".ds-chevron{width:48px;height:48px;padding:10px 6px;background:transparent;border:0;cursor:pointer}.ds-chevron span{display:grid;place-items:center;width:36px;height:28px;background:#242424;border-radius:18px}.ds-chevron:hover{background:transparent}.ds-chevron:focus-visible{outline:2px solid #FF3B3B;outline-offset:2px}.ds-chevron:active span{background:#353535}",
+      "refersTo": "options-chevron"
+    },
+    {
+      "name": "Camera navigation",
+      "kind": "nav",
+      "description": "Bare zoom stops and Photo/Filters task row; red identifies current selections.",
+      "html": "<nav class=\"ds-nav\"><div><button class=\"ds-current\">1×</button><button>1.5×</button><button>2×</button><button>3×</button></div><div class=\"ds-modes\"><button class=\"ds-current\">拍照</button><button>滤镜</button></div></nav>",
+      "css": ".ds-nav{color:white;font:15px sans-serif;text-align:center}.ds-nav button{font:inherit;color:white;background:transparent;border:0;min-width:48px;height:48px;padding:0 4px;border-radius:24px;cursor:pointer}.ds-nav .ds-current{color:#FF3B3B}.ds-nav .ds-modes{display:flex;gap:16px;justify-content:center}.ds-nav .ds-modes button{width:72px}.ds-nav button:hover{background:transparent}.ds-nav button:focus-visible{outline:2px solid #FF3B3B;outline-offset:2px}.ds-nav button:active{background:#FFFFFF33}",
+      "refersTo": "mode-selected"
     },
     {
       "name": "Manual shutter",
       "kind": "custom",
-      "refersTo": "camera-shutter",
-      "description": "80dp native shutter hit view with a white outer ring and central disk.",
-      "html": "<button class=\"ds-shutter\" aria-label=\"拍照\"><svg viewBox=\"0 0 24 24\" width=\"60\" height=\"60\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\" fill=\"none\" stroke=\"white\" stroke-width=\"1.25\"/><circle cx=\"12\" cy=\"12\" r=\"7.5\" fill=\"white\"/></svg></button>",
-      "css": ".ds-shutter{width:80px;height:80px;padding:10px;background:transparent;border:0;cursor:pointer;border-radius:44px}.ds-shutter:hover{background:transparent}.ds-shutter:focus-visible{outline:2px solid #C3EAD2;outline-offset:2px}.ds-shutter:active{opacity:.85}.ds-shutter:disabled{opacity:.45}"
+      "description": "Unpadded 80dp view, white outer ring and filled inner circle.",
+      "html": "<button class=\"ds-shutter\" aria-label=\"拍照\"><svg viewBox=\"0 0 24 24\" width=\"80\" height=\"80\"><circle cx=\"12\" cy=\"12\" r=\"10\" fill=\"none\" stroke=\"white\" stroke-width=\".65\"/><circle cx=\"12\" cy=\"12\" r=\"8.8\" fill=\"white\"/></svg></button>",
+      "css": ".ds-shutter{width:80px;height:80px;border:0;padding:0;border-radius:40px;background:transparent;cursor:pointer}.ds-shutter:hover{background:transparent}.ds-shutter:focus-visible{outline:2px solid #FF3B3B;outline-offset:2px}.ds-shutter:active{background:#FFFFFF33}.ds-shutter:disabled{opacity:.45}",
+      "refersTo": "manual-shutter"
     },
     {
-      "name": "Filter preset",
-      "kind": "chip",
-      "refersTo": "filter-preset-selected",
-      "description": "Day dialog selected filter preset; native ripple, without text recoloring.",
-      "html": "<button class=\"ds-preset\">柔和</button>",
-      "css": ".ds-preset{font:13px sans-serif;width:76px;height:52px;padding:6px 12px;color:#233C31;background:#DDECE1;border:0;border-radius:16px;cursor:pointer}.ds-preset:hover{background:#DDECE1}.ds-preset:focus-visible{outline:2px solid #2E6951;outline-offset:2px}.ds-preset:active{box-shadow:inset 0 0 0 100px #2E695123}"
-    },
-    {
-      "name": "Filter completion",
+      "name": "Inline filter card",
       "kind": "button",
-      "refersTo": "filter-done",
-      "description": "Full-width day-dialog completion action.",
-      "html": "<button class=\"ds-done\">完成</button>",
-      "css": ".ds-done{font:14px sans-serif;width:100%;height:48px;color:#2E6951;background:#DDECE1;border:0;border-radius:16px;cursor:pointer}.ds-done:hover{background:#DDECE1}.ds-done:focus-visible{outline:2px solid #2E6951;outline-offset:2px}.ds-done:active{box-shadow:inset 0 0 0 100px #2E695123}"
+      "description": "Selected card before preview pixels arrive; production fills this region with the actual camera image, never a stock photograph. Native keyboard focus adds a red outer outline while retaining the white selected preview border.",
+      "html": "<button class=\"ds-filter\" aria-pressed=\"true\"><span></span><strong>原片</strong></button>",
+      "css": ".ds-filter{display:block;width:76px;height:92px;padding:3px;border:0;background:transparent;color:white;font:13px sans-serif;cursor:pointer}.ds-filter span{display:block;height:64px;background:#171717;border-radius:2px;outline:2px solid white;outline-offset:-1px}.ds-filter strong{display:block;margin-top:8px;font:inherit}.ds-filter:hover{background:transparent}.ds-filter{position:relative}.ds-filter:focus-visible{outline:0}.ds-filter:focus-visible::after{content:\"\";position:absolute;inset:0;border:2px solid #FF3B3B;border-radius:4px;pointer-events:none}.ds-filter:active{opacity:.8}.ds-filter:disabled{opacity:.45}",
+      "refersTo": "filter-card"
     },
     {
-      "name": "Filter surface",
-      "kind": "card",
-      "refersTo": "filter-sheet",
-      "description": "Auxiliary sheet container, not a viewfinder panel.",
-      "html": "<section class=\"ds-sheet\"><h2>滤镜</h2><p>强度 100%</p></section>",
-      "css": ".ds-sheet{background:#F1F4F1;color:#233C31;border-radius:24px;padding:20px 24px 24px}.ds-sheet h2{font:20px sans-serif;margin:0 0 16px}.ds-sheet p{font:14px sans-serif;color:#536A5D;margin:0}"
-    },
-    {
-      "name": "Native settings field",
-      "kind": "input",
-      "description": "Browser illustration of the native single-line EditText affordance; dimensions and focus CSS are preview-only, not Android tokens.",
-      "html": "<label class=\"ds-field\">视觉模型<input aria-label=\"视觉模型\" placeholder=\"需支持图片输入\"/></label>",
-      "css": ".ds-field{display:grid;gap:4px;font:14px sans-serif;color:#233C31}.ds-field input{font:16px sans-serif;padding:8px 0;background:transparent;border:0;border-bottom:1px solid #536A5D;color:#233C31}.ds-field input:hover{border-bottom-color:#536A5D}.ds-field input:focus-visible{outline:0;border-bottom:2px solid #2E6951}.ds-field input:disabled{opacity:.45}"
-    },
-    {
-      "name": "Free-crop outline",
+      "name": "Filter strength ruler",
       "kind": "custom",
-      "description": "Representative arbitrary-ratio frame: 1dp mint line, 3dp dark under-stroke, 2dp corners up to 12dp. The transparent surround is intentional; sample dimensions are not ratio tokens.",
-      "html": "<svg class=\"ds-crop\" viewBox=\"0 0 240 180\" role=\"img\" aria-label=\"自由裁切范围\"><rect class=\"ds-crop-under\" x=\"30\" y=\"35\" width=\"180\" height=\"110\"/><rect class=\"ds-crop-outline\" x=\"30\" y=\"35\" width=\"180\" height=\"110\"/><path class=\"ds-crop-corners\" d=\"M42 35H30V47 M198 35H210V47 M42 145H30V133 M198 145H210V133\"/></svg>",
-      "css": ".ds-crop{display:block;width:240px;height:180px;background:transparent}.ds-crop rect,.ds-crop path{fill:none;stroke-linecap:round;stroke-linejoin:round}.ds-crop-under{stroke:#081B1364;stroke-width:3}.ds-crop-outline{stroke:#C3EAD2;stroke-width:1}.ds-crop-corners{stroke:#C3EAD2;stroke-width:2}"
-    },
-    {
-      "name": "Composition arrow",
-      "kind": "custom",
-      "description": "Straight bold phone-movement arrow: 8dp semi-transparent shaft/head, 14dp head, rounded caps and an 11dp low-alpha shaft under-stroke. Target ring stays thin.",
-      "html": "<svg class=\"ds-arrow\" viewBox=\"0 0 180 80\" role=\"img\" aria-label=\"沿箭头轻移手机\"><path class=\"ds-arrow-under\" d=\"M40 40L112 40\"/><path class=\"ds-arrow-main\" d=\"M40 40L112 40 M98 31.6L112 40L98 48.4\"/><circle class=\"ds-arrow-ring-under\" cx=\"132\" cy=\"40\" r=\"20\"/><circle class=\"ds-arrow-ring\" cx=\"132\" cy=\"40\" r=\"20\"/><circle cx=\"31\" cy=\"40\" r=\"4\" fill=\"white\"/></svg>",
-      "css": ".ds-arrow{display:block;width:180px;height:80px;background:transparent}.ds-arrow path,.ds-arrow-ring,.ds-arrow-ring-under{fill:none;stroke-linecap:round;stroke-linejoin:round}.ds-arrow-under{stroke:#081B132D;stroke-width:11}.ds-arrow-main{stroke:#C3EAD2B9;stroke-width:8}.ds-arrow-ring-under{stroke:#081B1364;stroke-width:4}.ds-arrow-ring{stroke:#C3EAD2;stroke-width:1.8}.ds-arrow.ds-ready .ds-arrow-main{stroke:#A6E4BDB9}.ds-arrow.ds-ready .ds-arrow-ring{stroke:#A6E4BD}"
+      "description": "Static 100% example; production uses native 0–100 range semantics and relative horizontal dragging. Native Left/Right changes2 points, Home/End0/100; Up/Down navigates. Focus geometry is shown; browser sample remains static.",
+      "html": "<div class=\"ds-strength\" tabindex=\"0\" role=\"slider\" aria-label=\"滤镜强度\" aria-valuemin=\"0\" aria-valuemax=\"100\" aria-valuenow=\"100\"><span>100</span><svg viewBox=\"0 0 260 36\" width=\"260\" height=\"36\" aria-hidden=\"true\"><path d=\"M10 14V23 M23 14V23 M36 14V23 M49 14V23 M62 11V25 M75 14V23 M88 14V23 M101 14V23 M114 14V23 M127 11V25\" stroke=\"#8D8D8D\" stroke-width=\"1\"/><path d=\"M130 6V30\" stroke=\"#FF3B3B\" stroke-width=\"2\"/></svg></div>",
+      "css": ".ds-strength{width:260px;height:56px;color:white;text-align:center;font:14px sans-serif}.ds-strength span{display:block;height:20px}.ds-strength svg{display:block}.ds-strength{position:relative}.ds-strength:focus-visible{outline:0}.ds-strength:focus-visible::after{content:\"\";position:absolute;inset:1px 2px;border:1.5px solid #FF3B3B;border-radius:6px;pointer-events:none}",
+      "refersTo": "filter-strength"
     },
     {
       "name": "Zoom gesture ruler",
       "kind": "custom",
-      "refersTo": "zoom-ruler",
-      "description": "48dp native touch target surrounding a 40dp visual panel. Static 2× example shows active thumb/fill on press or focus; actual Android control supports relative drag and accessible range actions.",
-      "html": "<button class=\"ds-ruler\" aria-label=\"变焦指示条，当前2倍\"><svg viewBox=\"0 0 48 204\" width=\"48\" height=\"204\" aria-hidden=\"true\"><rect x=\"4\" width=\"40\" height=\"204\" rx=\"20\" fill=\"#202523B3\"/><path d=\"M20 15H28 M24 11V19 M20 190H28\" stroke=\"#fff\" stroke-width=\"1.5\" stroke-linecap=\"round\"/><text x=\"24\" y=\"35\" fill=\"white\" text-anchor=\"middle\" font-size=\"11\" font-family=\"sans-serif\">2.0×</text><path d=\"M24 45V174 M20 45H28 M20 88H28 M20 131H28 M20 174H28\" fill=\"none\" stroke=\"#FFFFFFAA\" stroke-width=\"2\" stroke-linecap=\"round\"/><path class=\"ds-ruler-fill\" d=\"M24 131V174\" stroke=\"#C3EAD2\" stroke-width=\"2\" stroke-linecap=\"round\"/><circle class=\"ds-ruler-thumb\" cx=\"24\" cy=\"131\" r=\"4.5\" fill=\"#C3EAD2\"/><circle cx=\"24\" cy=\"131\" r=\"1.5\" fill=\"#202523B3\"/></svg></button>",
-      "css": ".ds-ruler{display:block;width:48px;height:204px;border:0;padding:0;background:transparent;border-radius:20px;cursor:ns-resize}.ds-ruler:hover{background:transparent}.ds-ruler:focus-visible{outline:2px solid #C3EAD2;outline-offset:2px}.ds-ruler:active .ds-ruler-fill,.ds-ruler:focus-visible .ds-ruler-fill{stroke-width:3}.ds-ruler:active .ds-ruler-thumb,.ds-ruler:focus-visible .ds-ruler-thumb{r:6px}.ds-ruler:disabled{opacity:.45}"
+      "description": "Static 2× inspection state,48dp target and40dp backing. Press shows active sizes/backing; focus adds the native red panel outline. Android keyboard Up/Down changes×1.1/÷1.1, Home/Endmin/max, with plus/equals/minus aliases.",
+      "html": "<button class=\"ds-ruler\" aria-label=\"变焦指示条，当前2倍\"><svg viewBox=\"0 0 48 168\" width=\"48\" height=\"168\"><rect class=\"ds-ruler-panel\" x=\"4\" width=\"40\" height=\"168\" rx=\"20\" fill=\"#00000044\"/><path d=\"M20 15H28 M24 11V19 M20 154H28\" stroke=\"white\" stroke-width=\"1.5\" stroke-linecap=\"round\"/><text x=\"24\" y=\"35\" fill=\"white\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"11\">2.0×</text><path d=\"M24 45V138 M20 45H28 M20 76H28 M20 107H28 M20 138H28\" stroke=\"#FFFFFFAA\" stroke-width=\"2\" stroke-linecap=\"round\"/><path class=\"ds-ruler-fill\" d=\"M24 107V138\" stroke=\"#FF3B3B\" stroke-width=\"2\"/><circle class=\"ds-ruler-thumb\" cx=\"24\" cy=\"107\" r=\"4.5\" fill=\"#FF3B3B\"/><circle cx=\"24\" cy=\"107\" r=\"1.5\" fill=\"#242424\"/></svg></button>",
+      "css": ".ds-ruler{display:block;width:48px;height:168px;padding:0;border:0;border-radius:20px;background:transparent;cursor:ns-resize}.ds-ruler:hover{background:transparent}.ds-ruler:focus-visible{outline:0}.ds-ruler:focus-visible .ds-ruler-panel{stroke:#FF3B3B;stroke-width:2}.ds-ruler:active .ds-ruler-panel{fill:#000000AA}.ds-ruler:active .ds-ruler-fill{stroke-width:3}.ds-ruler:active .ds-ruler-thumb{r:6px}.ds-ruler:disabled{opacity:.45}",
+      "refersTo": "zoom-ruler"
+    },
+    {
+      "name": "Native settings field",
+      "kind": "input",
+      "description": "Browser illustration of native single-line EditText; browser focus CSS is a specimen affordance, not a new Android field token.",
+      "html": "<label class=\"ds-field\">视觉模型<input placeholder=\"需支持图片输入\"/></label>",
+      "css": ".ds-field{display:grid;gap:4px;font:14px sans-serif;color:#242424;background:#F3F3F3;padding:12px}.ds-field input{font:16px sans-serif;color:#242424;background:transparent;border:0;border-bottom:1px solid #616161;padding:8px 0}.ds-field input:hover{border-bottom-color:#616161}.ds-field input:focus-visible{outline:0;border-bottom:2px solid #C62828}.ds-field input:disabled{opacity:.45}"
+    },
+    {
+      "name": "Straight composition arrow",
+      "kind": "custom",
+      "description": "White translucent movement arrow; ready state switches foreground to red. Static example retains thin target ring.",
+      "html": "<svg class=\"ds-arrow\" viewBox=\"0 0 180 80\" width=\"180\" height=\"80\" role=\"img\" aria-label=\"沿箭头轻移手机\"><path class=\"ds-arrow-under\" d=\"M40 40L112 40\"/><path class=\"ds-arrow-main\" d=\"M40 40L112 40 M98 31.6L112 40L98 48.4\"/><circle class=\"ds-ring-under\" cx=\"132\" cy=\"40\" r=\"20\"/><circle class=\"ds-ring\" cx=\"132\" cy=\"40\" r=\"20\"/><circle cx=\"31\" cy=\"40\" r=\"4\" fill=\"white\"/></svg>",
+      "css": ".ds-arrow path,.ds-ring,.ds-ring-under{fill:none;stroke-linecap:round;stroke-linejoin:round}.ds-arrow-under{stroke:#081B132D;stroke-width:11}.ds-arrow-main{stroke:#FFFFFFB9;stroke-width:8}.ds-ring-under{stroke:#081B1364;stroke-width:4}.ds-ring{stroke:white;stroke-width:1.8}.ds-arrow.ds-ready .ds-arrow-main{stroke:#FF3B3BB9}.ds-arrow.ds-ready .ds-ring{stroke:#FF3B3B}"
+    },
+    {
+      "name": "Viewfinder reference and crop",
+      "kind": "custom",
+      "description": "Golden-section reference grid, inactive red cross and retained white arbitrary-ratio crop; sample dimensions are not aspect-ratio tokens.",
+      "html": "<svg class=\"ds-guides\" viewBox=\"0 0 240 180\" width=\"240\" height=\"180\" role=\"img\" aria-label=\"参考线和自由裁切范围\"><path class=\"ds-grid\" d=\"M91.68 0V180 M148.32 0V180 M0 68.76H240 M0 111.24H240\"/><path class=\"ds-grid-corners\" d=\"M20 0H0V20 M220 0H240V20 M0 160V180H20 M220 180H240V160\"/><path class=\"ds-cross\" d=\"M109 90H131 M120 79V101\"/><rect class=\"ds-crop-under\" x=\"30\" y=\"35\" width=\"180\" height=\"110\"/><rect class=\"ds-crop\" x=\"30\" y=\"35\" width=\"180\" height=\"110\"/><path class=\"ds-crop-corners\" d=\"M42 35H30V47 M198 35H210V47 M42 145H30V133 M198 145H210V133\"/></svg>",
+      "css": ".ds-guides path,.ds-guides rect{fill:none;stroke-linecap:round}.ds-grid{stroke:#FFFFFF55;stroke-width:.6}.ds-grid-corners{stroke:#FFFFFF55;stroke-width:1}.ds-cross{stroke:#FF3B3B;stroke-width:1}.ds-crop-under{stroke:#081B1364;stroke-width:3}.ds-crop{stroke:white;stroke-width:1}.ds-crop-corners{stroke:white;stroke-width:2}"
     }
   ],
   "narrative": {
-    "northStar": "Soft Android",
-    "overview": "Soft Android treats the live image as the main material. Small rounded controls float on charcoal backings; white camera controls and mint guidance remain consistent in day and night. Auxiliary dialogs use quiet neutral surfaces that follow the system theme.\n\nThe visual character is gentle, compact and familiar to phone-camera users. Native Android Views, system sans typography, geometric drawn icons and restrained depth carry the interface. AI guidance assists the photographer while the manual shutter remains the capture control.",
+    "northStar": "Native Camera",
+    "overview": "A familiar native camera puts the live image behind a spare black, white and red control system. Bare white icons and text establish the controls; red indicates the selected stop, active task or ready composition. The manual shutter is the largest white shape.\n\nThe user-supplied photo and filter screenshots pin this visual replacement. Their durable language is monochrome contrast, restrained red selection, a double-circle shutter and inline image previews. The app expresses its own rear-camera-only capabilities through recent-photo and AI controls. Auxiliary provider settings keep native neutral day/night form semantics with red theme accents.",
     "keyCharacteristics": [
-      "Full-screen image with compact edge controls.",
-      "Mint selection, white capture affordance and local charcoal contrast.",
-      "Rounded native controls and neutral day/night dialogs.",
-      "Local guidance motion with system animation settings respected."
+      "Full-screen live image with local black edge fades.",
+      "Bare white drawn controls and red selected text.",
+      "Stable shutter with actual camera-backed inline filter previews.",
+      "Fine reference geometry, bold translucent movement arrow and continuous zoom."
     ],
     "rules": [
       {
-        "name": "Local Contrast",
-        "body": "Camera labels use their own charcoal backing; contrast support belongs to the control, rather than an opaque panel over the image.",
+        "name": "Bare Controls",
+        "body": "Keep ordinary camera controls transparent at rest. Use the small filled chevron, transient status and narrow ruler only where the implementation establishes a local backing.",
+        "section": "colors"
+      },
+      {
+        "name": "Red State",
+        "body": "Use red to identify selected controls, ruler position and ready guidance. Keep filter-card selection a white outline.",
         "section": "colors"
       },
       {
         "name": "Native Type",
-        "body": "Use system sans for native controls and supporting copy; the camera has no display typography layer.",
+        "body": "Use Android system sans and the implemented compact sp roles; no display typography layer is established.",
         "section": "typography"
       },
       {
-        "name": "Image First",
-        "body": "Keep the viewfinder full-screen and let controls float at its edges. Auxiliary sheets and settings dialogs open only for their task.",
+        "name": "Stable Shutter",
+        "body": "Opening or closing inline filters must keep the manual shutter in the same position and available for capture.",
         "section": "layout"
       },
       {
-        "name": "Quiet Depth",
-        "body": "Use tonal separation and native ripple feedback for controls; reserve dark strokes and text shadow for legibility over live imagery.",
+        "name": "Edge Contrast",
+        "body": "Support bare white controls with local top/bottom black fades and small backings; preserve the center of the live image without an opaque scrim.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "Do use the camera palette for live-view controls in both system themes.",
-      "Do preserve the familiar shutter silhouette and keep AI composition immediately beside it.",
-      "Do keep interactive camera controls at least 48dp and respect system insets.",
-      "Do use the day/night dialog palette for auxiliary tasks.",
-      "Do retain local search animation and its static fallback when system animation is disabled."
+      "Do preserve full-screen preview, system insets and at least 48dp interactive targets.",
+      "Do use red for active camera text and white for the selected filter border.",
+      "Do populate filter cards and the recent-photo control with actual camera or saved-image pixels.",
+      "Do keep the shutter fixed when showing filters and close the strip through Photo or Android Back.",
+      "Do honor disabled system animation for filter reveal, local search and automatic framing."
     ],
     "donts": [
-      "Don't put the live viewfinder inside a card or add opaque top/bottom control panels.",
-      "Don't replace the manual shutter with an AI-triggered capture action.",
-      "Don't introduce a display face, decorative typography or hardware imitation into this Soft world.",
-      "Don't treat OPPO functional composition inspiration as authorization for a pixel copy."
+      "Don't bring filled colored tiles or a modal filter sheet into this camera surface.",
+      "Don't copy reference branding, beauty controls, video modes, front-camera switching or unsupported optical focal lengths.",
+      "Don't replace live filter previews with sample photographs.",
+      "Don't present subjective AI ranking as an objective image-quality score."
     ]
   }
 }

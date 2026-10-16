@@ -1,6 +1,7 @@
 package com.luyuan.silkzoom
 
 import android.graphics.Color
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.Surface
 import android.widget.FrameLayout
@@ -112,7 +113,16 @@ class UiPreviewActivity : ComponentActivity(), CameraOverlayView.Listener {
     }
     override fun onEndComposition() { demoPlan = null; zoomController.beginInteraction(); cameraUi.setZoomAnimating(false); cameraUi.setComposition(false) }
     override fun onSettings() = Unit
-    override fun onFilters() = Unit
+    override fun onFilters() {
+        if (cameraUi.filtersVisible) cameraUi.closePanels()
+        else cameraUi.openFilters(preview.bitmap?.let { image -> val factor = minOf(1f, 256f / maxOf(image.width, image.height))
+            Bitmap.createScaledBitmap(image, (image.width * factor).toInt().coerceAtLeast(1), (image.height * factor).toInt().coerceAtLeast(1), true).also { if (it !== image) image.recycle() } })
+    }
+    override fun onFilterChanged(filter: StreetFilter, strength: Float) {
+        val paint = android.graphics.Paint().apply { colorFilter = android.graphics.ColorMatrixColorFilter(android.graphics.ColorMatrix(filter.matrix(strength))) }
+        preview.setLayerType(android.view.View.LAYER_TYPE_HARDWARE, paint); preview.setLayerPaint(paint); cameraUi.setFilter(filter, strength)
+    }
+    override fun onOpenPhoto() { cameraUi.showMessage("调试预览，请在相机主界面查看照片") }
     override fun onCycleFlash() = Unit
     override fun onZoomGestureStart() { onEndComposition(); zoomController.beginInteraction() }
     override fun onZoomGestureEnd() { zoomController.endInteraction() }
