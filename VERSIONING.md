@@ -1,6 +1,6 @@
 # 本地版本管理
 
-`main` 保存最新可发布版本，历史版本保留 `v0.1.0`、`v0.2.0`、`v0.3.0` 标签。当前版本为 `v0.3.1`，计划发布到公开仓库 `https://github.com/LYN-luyuan-code/ai-composition-camera`，正式 APK 通过 GitHub Releases 分发。永久签名私钥和本机配置不纳入 Git 历史；自动签名只通过受保护的 Actions Secrets 提供密钥，备份方式见 README。
+`main` 保存最新可发布版本，历史版本保留 `v0.1.0`、`v0.2.0`、`v0.3.0` 标签。当前版本为 `v0.3.1`，公开仓库为 `https://github.com/LYN-luyuan-code/ai-composition-camera`，正式 APK 通过 GitHub Releases 分发。永久签名私钥和本机配置不纳入 Git 历史；自动签名只通过受保护的 Actions Secrets 提供密钥，备份方式见 README。
 
 源码、测试、Gradle Wrapper、产品与设计说明纳入版本管理。构建输出、APK、模拟器、界面检查截图、本机 SDK 路径及密钥文件由 `.gitignore` 排除，原文件仍留在本地。
 
