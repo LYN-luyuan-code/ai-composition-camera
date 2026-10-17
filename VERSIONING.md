@@ -1,6 +1,6 @@
 # 本地版本管理
 
-`main` 保存项目基线，`v0.1.0` 标记首个版本。相机界面重写在 `codex/camera-reference-ui` 分支，版本为 `v0.2.0`。滤镜、LUT 导入和灵活构图在 `codex/lut-filters-free-crop` 分支，版本为 `v0.3.0`。当前只使用本地 Git，没有配置远程仓库；电脑损坏或目录丢失时，本地 Git 也会丢失，需要另行备份项目。
+`main` 保存最新可发布版本，历史版本保留 `v0.1.0`、`v0.2.0`、`v0.3.0` 标签。当前版本为 `v0.3.1`，计划发布到公开仓库 `https://github.com/LYN-luyuan-code/ai-composition-camera`，正式 APK 通过 GitHub Releases 分发。永久签名私钥和本机配置不纳入 Git 历史；自动签名只通过受保护的 Actions Secrets 提供密钥，备份方式见 README。
 
 源码、测试、Gradle Wrapper、产品与设计说明纳入版本管理。构建输出、APK、模拟器、界面检查截图、本机 SDK 路径及密钥文件由 `.gitignore` 排除，原文件仍留在本地。
 
@@ -33,12 +33,14 @@ git merge --no-ff codex/next-feature
 
 1. 修改 `app/build.gradle.kts` 的 `versionName`，每次分发新的安装版本时递增 `versionCode`。
 2. 在 `CHANGELOG.md` 记录变化和验证范围。
-3. 运行 `./gradlew testDebugUnitTest assembleDebug lintDebug`，提交后再建立带注释的版本标签。
+3. 运行 `./gradlew testDebugUnitTest lintDebug lintRelease assembleRelease`，以 `python3 scripts/package-release.py` 验证签名、生成分发包，提交后再建立带注释的版本标签。
 
-例如下次修复版使用 `versionName = "0.3.1"`、`versionCode = 4`，对应标签：
+例如下次修复版使用 `versionName = "0.3.2"`、`versionCode = 5`，对应标签：
 
 ```bash
-git tag -a v0.3.1 -m "Release 0.3.1"
+git tag -a v0.3.2 -m "Release 0.3.2"
+git push origin main
+git push origin v0.3.2
 ```
 
 已建立的版本标签保留原指向，修复用新提交和新版本记录。

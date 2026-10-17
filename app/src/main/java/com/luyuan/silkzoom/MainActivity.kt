@@ -45,6 +45,7 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
         }
     }
     private var settingsDialog: AlertDialog? = null
+    private val appUpdates by lazy { AppUpdateController(this) }
     private var lastPhotoUri: android.net.Uri? = null
     private var thumbnailBitmap: Bitmap? = null
     private val aiExecutor = Executors.newSingleThreadExecutor()
@@ -188,6 +189,7 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
     }
     override fun onStop() { cancelComposition(); super.onStop() }
     override fun onDestroy() {
+        appUpdates.close()
         settingsDialog?.dismiss(); previewAnalysis?.clearAnalyzer(); zoomController?.cancel(); cameraProvider?.unbindAll()
         compositionExecutor.shutdownNow(); aiExecutor.shutdownNow(); analysisExecutor.shutdownNow()
         // Let a photograph already being written finish and clear its MediaStore pending flag.
@@ -277,7 +279,7 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
         cancelComposition()
         overlayView.closePanels()
         settingsDialog=AlertDialog.Builder(this).setTitle("相机设置")
-            .setItems(arrayOf("AI 构图设置", "滤镜分类：$filterCategory", "当前滤镜说明：${streetFilter.label}", "导入 .cube LUT", "管理导入的 LUT")) { _,which ->
+            .setItems(arrayOf("AI 构图设置", "滤镜分类：$filterCategory", "当前滤镜说明：${streetFilter.label}", "导入 .cube LUT", "管理导入的 LUT", "检查更新 · ${BuildConfig.VERSION_NAME}")) { _,which ->
                 when(which) {
                     0 -> settingsDialog=AiSettingsDialog.show(this,aiSettings) { overlayView.showMessage("构图设置已保存") }
                     1 -> {
@@ -289,6 +291,7 @@ class MainActivity : ComponentActivity(), CameraOverlayView.Listener {
                     2 -> onFilterInfo(streetFilter)
                     3 -> onImportLut()
                     4 -> showImportedLuts()
+                    5 -> appUpdates.check()
                 }
             }.setNegativeButton("关闭",null).show()
     }

@@ -1,5 +1,5 @@
 ---
-name: "街拍相机 · Native Camera"
+name: "AI构图相机 · Native Camera"
 description: "Full-screen black camera chrome, bare white controls, red selection and inline camera-backed filters."
 colors:
   camera-black: "#000000"
@@ -110,7 +110,7 @@ components:
     padding: "6dp 12dp"
 ---
 
-# Design System: 街拍相机 · Native Camera
+# Design System: AI构图相机 · Native Camera
 
 ## Overview
 

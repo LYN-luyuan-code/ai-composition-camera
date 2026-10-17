@@ -35,6 +35,7 @@ class UiPreviewActivity : ComponentActivity(), CameraOverlayView.Listener {
     private var retainedWidth = 1f
     private var retainedHeight = 1f
     private var provider: ProcessCameraProvider? = null
+    private var promoGeneration = 0
     override fun onCreate(state: Bundle?) {
         super.onCreate(state)
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -116,14 +117,39 @@ class UiPreviewActivity : ComponentActivity(), CameraOverlayView.Listener {
         })
     }
     override fun onAutoCompose() {
-        demoPlan = CompositionPlan(targetX = .5f, targetY = .5f, cropScale = demoGoal, cropWidth = 1f, cropHeight = .6f)
-        retainedWidth = 1f; retainedHeight = .6f
+        if (intent.getBooleanExtra("promoFlow", false)) {
+            val generation = ++promoGeneration
+            cameraUi.setComposition(true, analyzing = true)
+            cameraUi.postDelayed({
+                if (isDestroyed || generation != promoGeneration) return@postDelayed
+                android.animation.ValueAnimator.ofFloat(0f, 1f).apply {
+                    duration = 1400L
+                    interpolator = android.view.animation.AccelerateDecelerateInterpolator()
+                    addUpdateListener { animation ->
+                        if (isDestroyed || generation != promoGeneration) { cancel(); return@addUpdateListener }
+                        val progress = animation.animatedValue as Float
+                        cameraUi.setComposition(true, (.67f - .17f * progress) to (.43f + .07f * progress),
+                            .5f to .5f, reason = "演示：保留空间与线条", goalZoom = demoGoal)
+                    }
+                    addListener(object : android.animation.AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: android.animation.Animator) {
+                            if (!isDestroyed && generation == promoGeneration) startDemoZoom(.31f)
+                        }
+                    })
+                    start()
+                }
+            }, 1100L)
+        } else startDemoZoom(.6f)
+    }
+    private fun startDemoZoom(height: Float) {
+        demoPlan = CompositionPlan(targetX = .5f, targetY = .5f, cropScale = demoGoal, cropWidth = 1f, cropHeight = height)
+        retainedWidth = 1f; retainedHeight = height
         cameraUi.setPhotoCrop(retainedWidth, retainedHeight)
         cameraUi.setComposition(true, .5f to .5f, .5f to .5f, cropping = true, reason = "演示：光影关系", goalZoom = demoGoal)
         cameraUi.setZoomAnimating(true)
         zoomController.frameTo(demoGoal)
     }
-    override fun onEndComposition() { demoPlan = null; zoomController.beginInteraction(); cameraUi.setZoomAnimating(false); cameraUi.setComposition(false) }
+    override fun onEndComposition() { promoGeneration++; demoPlan = null; zoomController.beginInteraction(); cameraUi.setZoomAnimating(false); cameraUi.setComposition(false) }
     override fun onSettings() = Unit
     override fun onFilters() {
         if(cameraUi.filtersVisible)cameraUi.closePanels() else {

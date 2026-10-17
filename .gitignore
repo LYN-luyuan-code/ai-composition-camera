@@ -29,3 +29,7 @@ signing.properties
 *.p12
 *.pfx
 *.pem
+
+# Local promotional renders and tooling
+.impeccable/promo-python/
+output/

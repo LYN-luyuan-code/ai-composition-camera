@@ -1,0 +1,5 @@
+# Copy to signing.properties. Use the SAME permanent key for every update.
+storeFile=/absolute/path/to/release.jks
+storePassword=replace-locally
+keyAlias=camera-release
+keyPassword=replace-locally

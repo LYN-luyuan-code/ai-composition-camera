@@ -1,4 +1,4 @@
-# 街拍相机
+# AI构图相机
 
 原生 Android Kotlin + CameraX 相机，支持 Android 10 及以上。全屏取景，浮动控制放在画面边缘，AI 构图按钮紧邻手动快门。只使用默认后置相机的 1× 画面；1–8× 缩放与构图收紧均通过数字裁切实现，不切换超广角或长焦。删除了录像、前摄切换和普通构图模式。
 
@@ -49,7 +49,7 @@ AI 对最多两个可见候选方案提供艺术兴趣、叙事、几何关系�
 
 ## 版本管理
 
-当前版本为 `0.3.0`（`versionCode = 3`），对应本地 Git 标签 `v0.3.0`。更新内容见 [CHANGELOG.md](CHANGELOG.md)，提交、分支和版本回退方式见 [VERSIONING.md](VERSIONING.md)。
+当前版本为 `0.3.1`（`versionCode = 4`）。[下载正式 APK](https://github.com/LYN-luyuan-code/ai-composition-camera/releases/latest)。更新内容见 [CHANGELOG.md](CHANGELOG.md)，提交、分支和版本回退方式见 [VERSIONING.md](VERSIONING.md)。
 
 ## 相机界面
 
@@ -66,3 +66,24 @@ AI 对最多两个可见候选方案提供艺术兴趣、叙事、几何关系�
 面向当前 SDR RGB 取景，导入的 Log/HDR 转换 LUT 需要匹配输入空间。所有色彩表统一到8位RGB节点；带输入域或1D整形的文件会烘焙到65³表，CPU三线性插值、GPU图集插值，强度在原片和变换结果之间混合。LUT 只改变颜色，不包含颗粒、光晕或空间模糊。设备若不能初始化GPU预览会回退原片并明确提示。
 
 AI 请求传入当前取景的实际宽高比，并要求返回任意正数 `aspect_ratio`，可横幅、竖幅、方形或其他形状，不按固定比例列表吸附。若与返回的宽高分数不一致，以实际比例为准并保留请求的最大边尺寸和放大倍数；旧协议仍兼容，详见 [自由裁切协议](FREE_CROP_PROTOCOL.md)。
+
+## 下载与软件更新
+
+[下载最新正式 APK](https://github.com/LYN-luyuan-code/ai-composition-camera/releases/latest)。支持 Android 10 及以上。安装下载的 APK 时，按 Android 提示允许浏览器安装应用。
+
+进入「相机设置 → 检查更新」手动查询 GitHub 最新正式版本，查看更新说明后点击「下载更新」。浏览器完成下载后打开 APK，由系统确认覆盖安装；正式版本之间保留照片、设置和导入 LUT。检查更新只请求公开版本信息，不上传取景、照片或 AI Key。没有后台强制下载或静默安装。GitHub 无法连接或限流时可稍后重试。
+
+**旧调试版首次迁移：**此前通过 `app-debug.apk` 安装的版本与正式版签名不同，需要先卸载调试版，再安装正式版；卸载会删除应用设置、Key 和导入的 LUT 副本，请事先保留原始 LUT 并记录供应商配置。系统图库中的照片继续保留。之后使用同一正式签名即可覆盖更新。Android 要求更新沿用签名，见 [官方签名文档](https://developer.android.com/studio/publish/app-signing)。
+
+## 正式签名与自动发布
+
+首次本地发行可运行 `python3 scripts/create-signing-key.py`，创建永久签名及已忽略的 `signing.properties`。密钥默认保存在 `~/.local/share/ai-composition-camera/signing/`，务必安全备份整个目录；不要提交、公开或为后续更新重新生成密钥。
+
+```bash
+./gradlew testDebugUnitTest lintDebug lintRelease assembleRelease
+python3 scripts/package-release.py
+```
+
+脚本验证 APK 签名，输出 `output/releases/v<版本>/ai-composition-camera-<版本>-<versionCode>.apk` 和 `SHA256SUMS.txt`。应用内检查通过 [GitHub Releases API](https://docs.github.com/en/rest/releases/releases#get-the-latest-release) 读取公开正式版本，只接受此仓库中版本匹配且上传完整的 APK，比较递增的 Android `versionCode`。
+
+GitHub Actions 在推送新 `v*` 标签后运行测试、Lint、签名打包并发布 APK；手动触发只构建并保留 artifact。仓库需配置四个 Actions Secrets：`ANDROID_KEYSTORE_BASE64`（上述永久 JKS 的 Base64）、`ANDROID_STORE_PASSWORD`、`ANDROID_KEY_ALIAS`、`ANDROID_KEY_PASSWORD`。Secret 由可信维护者配置，切勿写入源码或工作流。构建时使用临时签名文件，发布后清理。后续每个版本同时递增 `versionName` 和 `versionCode`，标签必须与应用版本一致。
