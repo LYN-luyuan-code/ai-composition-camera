@@ -45,7 +45,7 @@ jobs:
         run: ./gradlew testDebugUnitTest lintDebug lintRelease assembleRelease
       - name: Package and verify signature
         env:
-          GITHUB_REF_NAME: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || '' }}
+          RELEASE_TAG: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || '' }}
         run: python3 scripts/package-release.py
       - uses: actions/upload-artifact@v4
         with:

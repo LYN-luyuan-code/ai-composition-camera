@@ -14,7 +14,7 @@ assert metadata['applicationId'] == 'com.luyuan.silkzoom'
 assert len(metadata['elements']) == 1
 item = metadata['elements'][0]
 version, code = item['versionName'], item['versionCode']
-tag = os.environ.get('GITHUB_REF_NAME')
+tag = os.environ.get('RELEASE_TAG')
 if tag and tag != f'v{version}':
     raise SystemExit(f'Tag {tag} does not match Android version {version}')
 apk = folder / item['outputFile']
