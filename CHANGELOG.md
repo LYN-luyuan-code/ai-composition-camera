@@ -7,7 +7,7 @@
 - 固定正式签名，增加 APK 签名验证、SHA-256 校验清单和 GitHub Actions 标签发布流程。
 - 更新下载地址限定到本仓库，按 Android versionCode 判断新版；调试版首次迁移与签名备份方式见 README。
 
-验证：89 项单元测试、Debug/Release 构建和双构建类型 Lint 通过，正式 APK 签名验证通过。相机光学、真实 AI API 与滤镜还原验证范围沿用 0.3.0。
+验证：89 项单元测试、Debug/Release 构建和双构建类型 Lint 通过，正式 APK 签名验证通过。GitHub 云端测试、Lint、正式签名打包和 artifact 保存通过；公开 APK 下载成功，SHA-256 与本地分发包一致。真机覆盖升级、相机光学、真实 AI API 与滤镜还原仍需实测，相关验证范围沿用 0.3.0。
 
 ## 0.3.0 — 2026-10-17
 
